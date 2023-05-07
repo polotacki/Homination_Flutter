@@ -1,0 +1,708 @@
+@startuml
+set namespaceSeparator ::
+
+class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppCubit" {
+  +int currentIndex
+  +List<Widget> screens
+  +void changeIndex()
+  {static} +AppCubit get()
+}
+
+"bloc::src::cubit.dart::Cubit" <|-- "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppCubit"
+
+abstract class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppStates" {
+}
+
+class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppInitial" {
+}
+
+"homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppStates" <|-- "homaination_mobile::blocs::cubits::app
+_cupit::app_cubit.dart::AppInitial"
+
+class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppChangeBottomNavBarState" {
+}
+
+"homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppStates" <|-- "homaination_mobile::blocs::cubits::app
+_cupit::app_cubit.dart::AppChangeBottomNavBarState"
+
+class "homaination_mobile::blocs::simple_bloc_observer.dart::SimpleBlocOBserver" {
+  +void onEvent()
+  +void onError()
+  +void onChange()
+  +void onTransition()
+}
+
+"bloc::src::bloc_observer.dart::BlocObserver" <|-- "homaination_mobile::blocs::simple_bloc_observer.dart::SimpleBlocOB
+server"
+
+class "homaination_mobile::config.dart::Config" {
+  {static} +String appName
+  {static} +String apiURL
+  {static} +String loginAPI
+  {static} +String registerAPI
+}
+
+class "homaination_mobile::layout::home_layout.dart::HomeLayout" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::layout::home_layout.dart::HomeLayou
+t"
+
+class "homaination_mobile::main.dart::MyApp" {
+  +bool? isDark
+  {static} +Color iconColorDark
+  {static} +Color iconColorLight
+  {static} +Color textColor2
+  {static} +Color textColor1
+  {static} +Color appBarColor
+  {static} +Color scaffoldBgcolor
+  {static} +Color light
+  {static} +Color dark
+  {static} +Color shadowColorLight
+  +Widget build()
+}
+
+"homaination_mobile::main.dart::MyApp" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::main.dart::MyApp"
+
+class "homaination_mobile::model::Chat.dart::Chat" {
+  +String name
+  +String lastMessage
+  +String image
+  +String time
+  +bool isActive
+}
+
+class "homaination_mobile::model::on_boarding_model.dart::OnBoardingData" {
+  +String title
+  +String subTitle
+  +String image
+}
+
+class "homaination_mobile::model::register_request_model.dart::RegisterRequestModel" {
+  +String? username
+  +String? password
+  +String? email
+  +Map<String, dynamic> toJson()
+}
+
+class "homaination_mobile::model::user.dart::User" {
+  +String email
+  +String password
+}
+
+class "homaination_mobile::modules::auth::signin.dart::Signin" {
+  +_SigninState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "homaination_mobile::modules::auth::signin.dart::Signin"
+
+class "homaination_mobile::modules::auth::signin.dart::_SigninState" {
+  -GlobalKey<FormState> _formKey
+  +User user
+  -bool _passwordVisible
+  +Future<dynamic> save()
+  +Widget build()
+}
+
+"homaination_mobile::modules::auth::signin.dart::_SigninState" o-- "flutter::src::widgets::framework.dart::GlobalKey<F
+ormState>"
+"homaination_mobile::modules::auth::signin.dart::_SigninState" o-- "homaination_mobile::model::user.dart::User"
+"flutter::src::widgets::framework.dart::State" <|-- "homaination_mobile::modules::auth::signin.dart::_SigninState"
+
+class "homaination_mobile::modules::auth::signup.dart::Signup" {
+  +_SignupState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "homaination_mobile::modules::auth::signup.dart::Signup"
+
+class "homaination_mobile::modules::auth::signup.dart::_SignupState" {
+  -GlobalKey<FormState> _formKey
+  +User user
+  -bool _passwordVisible
+  +Future<dynamic> save()
+  +Widget build()
+}
+
+"homaination_mobile::modules::auth::signup.dart::_SignupState" o-- "flutter::src::widgets::framework.dart::GlobalKey<F
+ormState>"
+"homaination_mobile::modules::auth::signup.dart::_SignupState" o-- "homaination_mobile::model::user.dart::User"
+"flutter::src::widgets::framework.dart::State" <|-- "homaination_mobile::modules::auth::signup.dart::_SignupState"
+
+class "homaination_mobile::modules::chat_screen::chat_screen.dart::ChatScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::chat_screen::chat_screen.d
+art::ChatScreen"
+
+class "homaination_mobile::modules::favorite_screen::favorite_screen.dart::FavoriteScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::favorite_screen::favorite_
+screen.dart::FavoriteScreen"
+
+class "homaination_mobile::modules::home_screen::home_screen.dart::HomeScreen" {
+  +TextEditingController searchCtrl
+  +List<String> searchCategories
+  +List<String> searchLocations
+  +String? selectedCategory
+  +String? selectedLocation
+  -TextEditingController _priceRangeController
+  -SfRangeValues _values
+  +TextEditingController textEditingController
+  +Widget build()
+}
+
+"homaination_mobile::modules::home_screen::home_screen.dart::HomeScreen" o-- "flutter::src::widgets::editable_text.dar
+t::TextEditingController"
+"homaination_mobile::modules::home_screen::home_screen.dart::HomeScreen" o-- "syncfusion_flutter_sliders::src::common.
+dart::SfRangeValues"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::home_screen::home_screen.d
+art::HomeScreen"
+
+class "homaination_mobile::modules::on_boarding::on_boarding_screen.dart::OnBoardingScreen" {
+  +State<OnBoardingScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "homaination_mobile::modules::on_boarding::on_boarding_sc
+reen.dart::OnBoardingScreen"
+
+class "homaination_mobile::modules::on_boarding::on_boarding_screen.dart::_OnBoardingScreenState" {
+  -double _currentPageIndex
+  -PageController _controller
+  +void initState()
+  +Widget build()
+}
+
+"homaination_mobile::modules::on_boarding::on_boarding_screen.dart::_OnBoardingScreenState" o-- "flutter::src::widgets
+::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "homaination_mobile::modules::on_boarding::on_boarding_screen.dart
+::_OnBoardingScreenState"
+
+class "homaination_mobile::modules::profile::profile_screen.dart::ProfileScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::profile::profile_screen.da
+rt::ProfileScreen"
+
+class "homaination_mobile::shared::components::body.dart::Body" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::body.dart::Body
+"
+
+class "homaination_mobile::shared::components::chat_card.dart::ChatCard" {
+  +Chat chat
+  +void Function() press
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::chat_card.dart::ChatCard" o-- "homaination_mobile::model::Chat.dart::Chat"
+"homaination_mobile::shared::components::chat_card.dart::ChatCard" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::chat_card.dart:
+:ChatCard"
+
+class "homaination_mobile::shared::components::custom_bottom_navigation.dart::CustomBottomNavigationBar" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::custom_bottom_n
+avigation.dart::CustomBottomNavigationBar"
+
+class "homaination_mobile::shared::components::custom_button.dart::CustomButton" {
+  +dynamic onPress
+  +dynamic text
+  +dynamic padding
+  +dynamic fontWeight
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::custom_button.d
+art::CustomButton"
+
+class "homaination_mobile::shared::components::filled_outline_button.dart::FillOutlineButton" {
+  +bool isFilled
+  +void Function() press
+  +String text
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::filled_outline_button.dart::FillOutlineButton" o-- "dart::ui::void Function()
+"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::filled_outline_
+button.dart::FillOutlineButton"
+
+class "homaination_mobile::shared::components::horizontal_card.dart::HorizontalCard" {
+  +String imageAsset
+  +PageController controller
+  +int reviews
+  +String cardName
+  +String category
+  +int price
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::horizontal_card.dart::HorizontalCard" o-- "flutter::src::widgets::page_view.d
+art::PageController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::horizontal_card
+.dart::HorizontalCard"
+
+class "homaination_mobile::shared::components::my_button.dart::MyButton" {
+  +dynamic Function()? onTap
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::my_button.dart::MyButton" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_button.dart:
+:MyButton"
+
+class "homaination_mobile::shared::components::my_button.dart::MyButtonAgree" {
+  +dynamic Function()? onTap
+  +String text
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::my_button.dart::MyButtonAgree" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_button.dart:
+:MyButtonAgree"
+
+class "homaination_mobile::shared::components::my_textfield.dart::MyTextField" {
+  +dynamic controller
+  +String hintText
+  +bool obscureText
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_textfield.da
+rt::MyTextField"
+
+class "homaination_mobile::shared::components::my_textfield.dart::MyPasswordTextField" {
+  +dynamic controller
+  +String hintText
+  +bool obscureText
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_textfield.da
+rt::MyPasswordTextField"
+
+class "homaination_mobile::shared::components::price_range_text_field.dart::PriceRangeTextField" {
+  +TextEditingController controller
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::price_range_text_field.dart::PriceRangeTextField" o-- "flutter::src::widgets:
+:editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::price_range_tex
+t_field.dart::PriceRangeTextField"
+
+class "homaination_mobile::shared::components::profile_menu.dart::ProfileMenu" {
+  +String text
+  +String icon
+  +void Function()? press
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::profile_menu.dart::ProfileMenu" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::profile_menu.da
+rt::ProfileMenu"
+
+class "homaination_mobile::shared::components::profile_pic.dart::ProfilePic" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::profile_pic.dar
+t::ProfilePic"
+
+class "homaination_mobile::shared::components::square_tile.dart::SquareTile" {
+  +String imagePath
+  +String title
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::square_tile.dar
+t::SquareTile"
+
+class "homaination_mobile::shared::components::vertical_card.dart::VerticalCard" {
+  +String imageAsset
+  +int reviews
+  +String cardName
+  +String category
+  +int price
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::vertical_card.d
+art::VerticalCard"
+class "homaination_mobile::shared::network::local::cache_helper.dart::CacheHelper" {
+  {static} +SharedPreferences? sharedPreferences
+  {static} +dynamic init()
+  {static} +Future<bool?> putBoolean()
+  {static} +bool? getBoolean()
+}
+
+"homaination_mobile::shared::network::local::cache_helper.dart::CacheHelper" o-- "shared_preferences::shared_preferenc
+es.dart::SharedPreferences"
+
+
+@enduml
+PS D:\homaination_mobile> dart pub global run dcdg
+@startuml
+set namespaceSeparator ::
+
+class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppCubit" {
+  +int currentIndex
+  +List<Widget> screens
+  +void changeIndex()
+  {static} +AppCubit get()
+}
+
+"bloc::src::cubit.dart::Cubit" <|-- "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppCubit"
+
+abstract class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppStates" {
+}
+
+class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppInitial" {
+}
+
+"homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppStates" <|-- "homaination_mobile::blocs::cubits::app
+_cupit::app_cubit.dart::AppInitial"
+
+class "homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppChangeBottomNavBarState" {
+}
+
+"homaination_mobile::blocs::cubits::app_cupit::app_cubit.dart::AppStates" <|-- "homaination_mobile::blocs::cubits::app
+_cupit::app_cubit.dart::AppChangeBottomNavBarState"
+
+class "homaination_mobile::blocs::simple_bloc_observer.dart::SimpleBlocOBserver" {
+  +void onEvent()
+  +void onError()
+  +void onChange()
+  +void onTransition()
+}
+
+"bloc::src::bloc_observer.dart::BlocObserver" <|-- "homaination_mobile::blocs::simple_bloc_observer.dart::SimpleBlocOB
+server"
+
+class "homaination_mobile::config.dart::Config" {
+  {static} +String appName
+  {static} +String apiURL
+  {static} +String loginAPI
+  {static} +String registerAPI
+}
+
+class "homaination_mobile::layout::home_layout.dart::HomeLayout" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::layout::home_layout.dart::HomeLayou
+t"
+
+class "homaination_mobile::main.dart::MyApp" {
+  +bool? isDark
+  {static} +Color iconColorDark
+  {static} +Color iconColorLight
+  {static} +Color textColor2
+  {static} +Color textColor1
+  {static} +Color appBarColor
+  {static} +Color scaffoldBgcolor
+  {static} +Color light
+  {static} +Color dark
+  {static} +Color shadowColorLight
+  +Widget build()
+}
+
+"homaination_mobile::main.dart::MyApp" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::main.dart::MyApp"
+
+class "homaination_mobile::model::Chat.dart::Chat" {
+  +String name
+  +String lastMessage
+  +String image
+  +String time
+  +bool isActive
+}
+
+class "homaination_mobile::model::on_boarding_model.dart::OnBoardingData" {
+  +String title
+  +String subTitle
+  +String image
+}
+
+class "homaination_mobile::model::register_request_model.dart::RegisterRequestModel" {
+  +String? username
+  +String? password
+  +String? email
+  +Map<String, dynamic> toJson()
+}
+
+class "homaination_mobile::model::user.dart::User" {
+  +String email
+  +String password
+}
+
+class "homaination_mobile::modules::auth::signin.dart::Signin" {
+  +_SigninState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "homaination_mobile::modules::auth::signin.dart::Signin"
+
+class "homaination_mobile::modules::auth::signin.dart::_SigninState" {
+  -GlobalKey<FormState> _formKey
+  +User user
+  -bool _passwordVisible
+  +Future<dynamic> save()
+  +Widget build()
+}
+
+"homaination_mobile::modules::auth::signin.dart::_SigninState" o-- "flutter::src::widgets::framework.dart::GlobalKey<F
+ormState>"
+"homaination_mobile::modules::auth::signin.dart::_SigninState" o-- "homaination_mobile::model::user.dart::User"
+"flutter::src::widgets::framework.dart::State" <|-- "homaination_mobile::modules::auth::signin.dart::_SigninState"
+
+class "homaination_mobile::modules::auth::signup.dart::Signup" {
+  +_SignupState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "homaination_mobile::modules::auth::signup.dart::Signup"
+
+class "homaination_mobile::modules::auth::signup.dart::_SignupState" {
+  -GlobalKey<FormState> _formKey
+  +User user
+  -bool _passwordVisible
+  +Future<dynamic> save()
+  +Widget build()
+}
+
+"homaination_mobile::modules::auth::signup.dart::_SignupState" o-- "flutter::src::widgets::framework.dart::GlobalKey<F
+ormState>"
+"homaination_mobile::modules::auth::signup.dart::_SignupState" o-- "homaination_mobile::model::user.dart::User"
+"flutter::src::widgets::framework.dart::State" <|-- "homaination_mobile::modules::auth::signup.dart::_SignupState"
+
+class "homaination_mobile::modules::chat_screen::chat_screen.dart::ChatScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::chat_screen::chat_screen.d
+art::ChatScreen"
+
+class "homaination_mobile::modules::favorite_screen::favorite_screen.dart::FavoriteScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::favorite_screen::favorite_
+screen.dart::FavoriteScreen"
+
+class "homaination_mobile::modules::home_screen::home_screen.dart::HomeScreen" {
+  +TextEditingController searchCtrl
+  +List<String> searchCategories
+  +List<String> searchLocations
+  +String? selectedCategory
+  +String? selectedLocation
+  -TextEditingController _priceRangeController
+  -SfRangeValues _values
+  +TextEditingController textEditingController
+  +Widget build()
+}
+
+"homaination_mobile::modules::home_screen::home_screen.dart::HomeScreen" o-- "flutter::src::widgets::editable_text.dar
+t::TextEditingController"
+"homaination_mobile::modules::home_screen::home_screen.dart::HomeScreen" o-- "syncfusion_flutter_sliders::src::common.
+dart::SfRangeValues"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::home_screen::home_screen.d
+art::HomeScreen"
+
+class "homaination_mobile::modules::on_boarding::on_boarding_screen.dart::OnBoardingScreen" {
+  +State<OnBoardingScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "homaination_mobile::modules::on_boarding::on_boarding_sc
+reen.dart::OnBoardingScreen"
+
+class "homaination_mobile::modules::on_boarding::on_boarding_screen.dart::_OnBoardingScreenState" {
+  -double _currentPageIndex
+  -PageController _controller
+  +void initState()
+  +Widget build()
+}
+
+"homaination_mobile::modules::on_boarding::on_boarding_screen.dart::_OnBoardingScreenState" o-- "flutter::src::widgets
+::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "homaination_mobile::modules::on_boarding::on_boarding_screen.dart
+::_OnBoardingScreenState"
+
+class "homaination_mobile::modules::profile::profile_screen.dart::ProfileScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::modules::profile::profile_screen.da
+rt::ProfileScreen"
+
+class "homaination_mobile::shared::components::body.dart::Body" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::body.dart::Body
+"
+
+class "homaination_mobile::shared::components::chat_card.dart::ChatCard" {
+  +Chat chat
+  +void Function() press
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::chat_card.dart::ChatCard" o-- "homaination_mobile::model::Chat.dart::Chat"
+"homaination_mobile::shared::components::chat_card.dart::ChatCard" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::chat_card.dart:
+:ChatCard"
+
+class "homaination_mobile::shared::components::custom_bottom_navigation.dart::CustomBottomNavigationBar" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::custom_bottom_n
+avigation.dart::CustomBottomNavigationBar"
+
+class "homaination_mobile::shared::components::custom_button.dart::CustomButton" {
+  +dynamic onPress
+  +dynamic text
+  +dynamic padding
+  +dynamic fontWeight
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::custom_button.d
+art::CustomButton"
+
+class "homaination_mobile::shared::components::filled_outline_button.dart::FillOutlineButton" {
+  +bool isFilled
+  +void Function() press
+  +String text
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::filled_outline_button.dart::FillOutlineButton" o-- "dart::ui::void Function()
+"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::filled_outline_
+button.dart::FillOutlineButton"
+
+class "homaination_mobile::shared::components::horizontal_card.dart::HorizontalCard" {
+  +String imageAsset
+  +PageController controller
+  +int reviews
+  +String cardName
+  +String category
+  +int price
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::horizontal_card.dart::HorizontalCard" o-- "flutter::src::widgets::page_view.d
+art::PageController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::horizontal_card
+.dart::HorizontalCard"
+
+class "homaination_mobile::shared::components::my_button.dart::MyButton" {
+  +dynamic Function()? onTap
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::my_button.dart::MyButton" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_button.dart:
+:MyButton"
+
+class "homaination_mobile::shared::components::my_button.dart::MyButtonAgree" {
+  +dynamic Function()? onTap
+  +String text
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::my_button.dart::MyButtonAgree" o-- "null::dynamic Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_button.dart:
+:MyButtonAgree"
+
+class "homaination_mobile::shared::components::my_textfield.dart::MyTextField" {
+  +dynamic controller
+  +String hintText
+  +bool obscureText
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_textfield.da
+rt::MyTextField"
+
+class "homaination_mobile::shared::components::my_textfield.dart::MyPasswordTextField" {
+  +dynamic controller
+  +String hintText
+  +bool obscureText
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::my_textfield.da
+rt::MyPasswordTextField"
+
+class "homaination_mobile::shared::components::price_range_text_field.dart::PriceRangeTextField" {
+  +TextEditingController controller
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::price_range_text_field.dart::PriceRangeTextField" o-- "flutter::src::widgets:
+:editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::price_range_tex
+t_field.dart::PriceRangeTextField"
+
+class "homaination_mobile::shared::components::profile_menu.dart::ProfileMenu" {
+  +String text
+  +String icon
+  +void Function()? press
+  +Widget build()
+}
+
+"homaination_mobile::shared::components::profile_menu.dart::ProfileMenu" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::profile_menu.da
+rt::ProfileMenu"
+
+class "homaination_mobile::shared::components::profile_pic.dart::ProfilePic" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::profile_pic.dar
+t::ProfilePic"
+
+class "homaination_mobile::shared::components::square_tile.dart::SquareTile" {
+  +String imagePath
+  +String title
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::square_tile.dar
+t::SquareTile"
+
+class "homaination_mobile::shared::components::vertical_card.dart::VerticalCard" {
+  +String imageAsset
+  +int reviews
+  +String cardName
+  +String category
+  +int price
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "homaination_mobile::shared::components::vertical_card.d
+art::VerticalCard"
+
+class "homaination_mobile::shared::network::local::cache_helper.dart::CacheHelper" {
+  {static} +SharedPreferences? sharedPreferences
+  {static} +dynamic init()
+  {static} +Future<bool?> putBoolean()
+  {static} +bool? getBoolean()
+}
+
+"homaination_mobile::shared::network::local::cache_helper.dart::CacheHelper" o-- "shared_preferences::shared_preferenc
+es.dart::SharedPreferences"
+
+
+@enduml
