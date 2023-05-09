@@ -3,12 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:homaination_mobile/bloc/cubits/home_cubit/home_cubit.dart';
-import 'package:homaination_mobile/layout/home_layout.dart';
 import 'package:homaination_mobile/shared/components/horizontal_card.dart';
 
-import '../../bloc/cubits/app_cupit/app_cubit.dart';
 import '../../data/cards.dart';
-import '../../model/services_mod.dart';
 import '../../model/services_model.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -52,7 +49,7 @@ class FavoriteScreen extends StatelessWidget {
                         child: SlideAnimation(
                             horizontalOffset: 50.0,
                             child: FadeInAnimation(
-                                child: HorizontalCard(state: state,
+                                child: HorizontalCard(
                                     service: HomeCubit.get(context).services![index],
                                     avarageRate: _calculateAverageRating(
                                         HomeCubit.get(context).services![index].reviews)))));

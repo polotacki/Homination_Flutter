@@ -21,7 +21,7 @@ class ChatScreen extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               onPressed: () {},
               backgroundColor: buttonColor,
-              child: Icon(
+              child: const Icon(
                 Icons.person_add_alt_1,
                 color: Colors.white,
               ),
@@ -36,7 +36,7 @@ AppBar buildAppBar() {
     title: Text('Massage',style:TextStyle(fontSize: 20.sp,fontFamily: 'Poppins',fontWeight: FontWeight.normal,)),
     actions: [
       IconButton(
-        icon: Icon(Icons.search),
+        icon: const Icon(Icons.search),
         onPressed: () {},
       ),
     ],

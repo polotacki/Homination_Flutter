@@ -34,7 +34,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   void submit(){
     CacheHelper.saveData(key: "onBoarding", value: true).then((value) {
       if (value ) {
-      Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => HomeLayout()));
+      Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) => const HomeLayout()));
 
       }
     });

@@ -85,8 +85,8 @@ class _NotificationSettingsScreenState
         value: value,
         onChanged: onChanged,
         activeColor: Colors.white,
-        activeTrackColor: Color(0xff4CA6A8),
-        inactiveTrackColor: Color(0xffE9E9E9),inactiveThumbColor: Colors.white,
+        activeTrackColor: const Color(0xff4CA6A8),
+        inactiveTrackColor: const Color(0xffE9E9E9),inactiveThumbColor: Colors.white,
       ),
     );
   }

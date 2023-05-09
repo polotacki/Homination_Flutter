@@ -34,7 +34,7 @@ class _ProposalScreenState extends State<ProposalScreen> {
           ),
           centerTitle: true,
           leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Iconsax.arrow_left_24,
               ),
               onPressed: () {
@@ -53,7 +53,7 @@ class _ProposalScreenState extends State<ProposalScreen> {
                     child: Column(
                       children: [
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Property in meter',
                             border: InputBorder.none,
                           ),
@@ -68,9 +68,9 @@ class _ProposalScreenState extends State<ProposalScreen> {
                             _propertyInMeter = value;
                           },
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Property type',
                             border: InputBorder.none,
                           ),
@@ -93,9 +93,9 @@ class _ProposalScreenState extends State<ProposalScreen> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Location',
                             border: InputBorder.none,
                           ),
@@ -109,12 +109,12 @@ class _ProposalScreenState extends State<ProposalScreen> {
                             _location = value;
                           },
                         ),
-                        SizedBox(height: 16.0),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         Container(
                           height: 200.0,
                           child: TextFormField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Request description',
                               alignLabelWithHint: true,
                               border: InputBorder.none,

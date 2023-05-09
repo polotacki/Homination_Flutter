@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ApplicationCard extends StatelessWidget {
   ApplicationCard(
@@ -21,7 +20,7 @@ class ApplicationCard extends StatelessWidget {
   final String price;
 
   final _iconSizeWidth = 50.0.w;
-  final _iconSizeHeight = 50.0.h;
+  final _iconSizeHeight = 50.0.w;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class ApplicationCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
-            BoxShadow(
+            const BoxShadow(
                 color: Color(0x1a403b4b),
                 offset: Offset(0, 10),
                 blurRadius: 35,
@@ -53,13 +52,13 @@ class ApplicationCard extends StatelessWidget {
                   child: Container(
                       width: _iconSizeWidth,
                       height: _iconSizeHeight,clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: const Color.fromRGBO(68, 96, 160, 1),
+                      ),
                       child: Image.network(
                         companyImage,
                         fit: BoxFit.fill,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color.fromRGBO(68, 96, 160, 1),
                       )),
                 ),
                 Expanded(
@@ -79,18 +78,18 @@ class ApplicationCard extends StatelessWidget {
                                 color: Colors.black,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600)),
-                        SizedBox(height: 4.0),
+                        const SizedBox(height: 4.0),
                         Text(city,
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 color: Colors.grey,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w300)),
-                        SizedBox(height: 4.0),
+                        const SizedBox(height: 4.0),
                       ],
                     ),
                     trailing: IconButton(
-                      icon: Icon(Icons.more_vert),
+                      icon: const Icon(Icons.more_vert),
                       onPressed: () {},
                     ),
                   ),
@@ -102,27 +101,27 @@ class ApplicationCard extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 20.w),
                   child: Container(
-                    child: Text(status,
-                        style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: status == 'Accepted'
-                                ? Color(0xff1ED760)
-                                : status == 'Rejected'
-                                    ? Color(0xffEA4C89)
-                                    : Color(0xff1976D2),
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600)),
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     width: 135.w,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       color: status == 'Accepted'
-                          ? Color(0xffDDFFE9)
+                          ? const Color(0xffDDFFE9)
                           : status == 'Rejected'
-                              ? Color(0xffFFD4E5)
+                              ? const Color(0xffFFD4E5)
                               : Colors.white,
                     ),
+                    child: Text(status,
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            color: status == 'Accepted'
+                                ? const Color(0xff1ED760)
+                                : status == 'Rejected'
+                                    ? const Color(0xffEA4C89)
+                                    : const Color(0xff1976D2),
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600)),
                   ),
                 ),
                 SizedBox(width: 40.w),
@@ -130,10 +129,10 @@ class ApplicationCard extends StatelessWidget {
                     style: TextStyle(
                         fontFamily: 'Poppins',
                         color: status == 'Accepted'
-                            ? Color(0xff1ED760)
+                            ? const Color(0xff1ED760)
                             : status == 'Rejected'
-                                ? Color(0xffEA4C89)
-                                : Color(0xff1976D2),
+                                ? const Color(0xffEA4C89)
+                                : const Color(0xff1976D2),
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600)),
               ],

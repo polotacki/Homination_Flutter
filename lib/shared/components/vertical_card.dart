@@ -5,7 +5,6 @@ import 'package:homaination_mobile/shared/style/constants.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../model/services_mod.dart';
 import '../../model/services_model.dart';
 import 'custom_show_modal_sheet.dart';
 
@@ -18,7 +17,7 @@ class VerticalCard extends StatelessWidget {
 
   final String category;
 
-  final String price;
+  final int price;
 
   final List<Review> averageReviews;
 

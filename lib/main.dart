@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:homaination_mobile/layout/home_layout.dart';
-import 'package:homaination_mobile/modules/auth/login_screen.dart';
 import 'package:homaination_mobile/shared/network/local/cache_helper.dart';
 import 'package:homaination_mobile/shared/style/themes.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/cubits/app_cupit/app_cubit.dart';
 import 'bloc/simple_bloc_observer.dart';
 import 'modules/on_boarding/on_boarding_screen.dart';
@@ -24,9 +21,9 @@ Future<void> main() async {
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
   Widget widget;
   if (onBoarding != null) {
-   widget = HomeLayout();
+   widget = const HomeLayout();
   }else{
-    widget= OnBoardingScreen();
+    widget= const OnBoardingScreen();
   }
 print("initScreen = $widget");
 

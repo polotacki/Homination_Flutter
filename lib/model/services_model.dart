@@ -8,7 +8,7 @@ class ServicesModel {
   String provider;
   String categories;
   String providerImage;
-  String price;
+  int price;
   String location;
   List<Review> reviews;
   DateTime createdAt;

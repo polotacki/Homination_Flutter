@@ -97,7 +97,7 @@ class _SignupState extends State<Signup> {
                       }
                     },
                     decoration: InputDecoration(
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Iconsax.sms,
                         color: secondaryColor,
                       ),
@@ -143,7 +143,7 @@ class _SignupState extends State<Signup> {
                       return null;
                     },
                     decoration: InputDecoration(
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Iconsax.lock,
                         color: secondaryColor,
                       ),

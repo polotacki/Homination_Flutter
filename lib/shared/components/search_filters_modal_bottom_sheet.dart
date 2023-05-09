@@ -26,8 +26,8 @@ import '../../model/search_filters_model.dart';
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Text(
                 'Search Filters',
                 style: TextStyle(
@@ -36,9 +36,9 @@ import '../../model/search_filters_model.dart';
                 ),
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Category',
                 border: OutlineInputBorder(),
               ),
@@ -48,9 +48,9 @@ import '../../model/search_filters_model.dart';
                 });
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Location',
                 border: OutlineInputBorder(),
               ),
@@ -60,16 +60,16 @@ import '../../model/search_filters_model.dart';
                 });
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Price Range:'),
-                SizedBox(width: 16.0),
+                const Text('Price Range:'),
+                const SizedBox(width: 16.0),
                 Flexible(
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Min',
                       border: OutlineInputBorder(),
                     ),
@@ -80,13 +80,13 @@ import '../../model/search_filters_model.dart';
                     },
                   ),
                 ),
-                SizedBox(width: 16.0),
-                Text('to'),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
+                const Text('to'),
+                const SizedBox(width: 16.0),
                 Flexible(
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Max',
                       border: OutlineInputBorder(),
                     ),
@@ -99,7 +99,7 @@ import '../../model/search_filters_model.dart';
                 ),
               ],
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 SearchFilters filters = SearchFilters(
@@ -111,9 +111,9 @@ import '../../model/search_filters_model.dart';
                 widget.onFiltersApplied(filters);
                 Navigator.pop(context);
               },
-              child: Text('Apply Filters'),
+              child: const Text('Apply Filters'),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
           ],
         ),
       );

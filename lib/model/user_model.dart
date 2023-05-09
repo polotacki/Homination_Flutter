@@ -1,8 +1,11 @@
+// ignore_for_file: unnecessary_new, unnecessary_this
+
 class UserModel
 {
   String? profilePic;
   String? sId;
   String? username;
+  String? name;
   String? email;
   String? createdAt;
   String? updatedAt;
@@ -13,6 +16,7 @@ class UserModel
       {this.profilePic,
         this.sId,
         this.username,
+        this.name,
         this.email,
         this.createdAt,
         this.updatedAt,
@@ -27,6 +31,7 @@ class UserModel
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    name = json['name'];
     token = json['token'];
   }
 

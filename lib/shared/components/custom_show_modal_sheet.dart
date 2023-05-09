@@ -33,12 +33,12 @@ heightFactor: 0.88,
 child: Column(
 children: [
 Padding(
-padding: EdgeInsets.only(top: 10),
+padding: const EdgeInsets.only(top: 10),
 child: Container(
 width: 80.w,
 height: 4.h,
 decoration: BoxDecoration(
-color: Color(0xffFBFBFB),
+color: const Color(0xffFBFBFB),
 borderRadius:
 BorderRadius.circular(10)),
 ),
@@ -75,7 +75,7 @@ Padding(
 padding: EdgeInsets.only(left: 41.0.w),
 child: Row(
 children: [
-Icon(Iconsax.star),
+const Icon(Iconsax.star),
 SizedBox(
 width: 9.w,
 ),
@@ -119,7 +119,7 @@ padding: EdgeInsets.only(
 left: 20.0.w,
 right: 20.0.w,
 ),
-child: Container(
+child: SizedBox(
 width: double.infinity,
 height: 250.h,
 child: PageView(
@@ -141,7 +141,7 @@ SizedBox(
 height: 20.h,
 ),
 Expanded(
-child: Scrollbar(radius: Radius.circular(10) ,
+child: Scrollbar(radius: const Radius.circular(10) ,
 child: SingleChildScrollView(
 scrollDirection:
 Axis.vertical,
@@ -178,7 +178,7 @@ children: [
 Container(
 decoration: BoxDecoration(
 color:
-Color(0xffD9D9D9),
+const Color(0xffD9D9D9),
 borderRadius:
 BorderRadius
     .circular(
@@ -190,7 +190,7 @@ padding:
 const EdgeInsets
     .all(8.0),
 child:
-Scrollbar( radius: Radius.circular(10),
+Scrollbar( radius: const Radius.circular(10),
 child: ListView.separated(
 scrollDirection:
 Axis
@@ -275,7 +275,7 @@ children: [
 Container(
 decoration: BoxDecoration(
 color:
-Color(0xffD9D9D9),
+const Color(0xffD9D9D9),
 borderRadius:
 BorderRadius
     .circular(
@@ -451,8 +451,11 @@ onPressed: () {
   Widget widget;
   String? token = CacheHelper.getData(key: 'Token');
 
-  if (token!=null) widget= ProposalScreen();
-  else widget= LoginScreen();
+  if (token!=null) {
+    widget= ProposalScreen();
+  } else {
+    widget= LoginScreen();
+  }
   Navigator
     .push(
 context,
@@ -464,14 +467,14 @@ child: Row(
 mainAxisAlignment:
 MainAxisAlignment.center,
 children: [
-Icon(
+const Icon(
 Iconsax.message5,
 color: Colors.white,
 ),
 SizedBox(
 width: 6.w,
 ),
-Text(
+const Text(
 "Send Proposal",
 style: TextStyle(fontFamily: "Poppins",
 fontWeight:

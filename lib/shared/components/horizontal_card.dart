@@ -1,25 +1,22 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homaination_mobile/model/services_model.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:shimmer/shimmer.dart';
-import '../../bloc/cubits/home_cubit/home_cubit.dart';
 import 'custom_show_modal_sheet.dart';
 import '../style/constants.dart';
 
 class HorizontalCard extends StatelessWidget {
   final ServicesModel service;
 
-  final HomeState state;
+
   final double avarageRate;
 
   HorizontalCard({
     super.key,
     context,
-    required this.service, required this.avarageRate, required this.state,
+    required this.service, required this.avarageRate,
   });
 
   @override
@@ -47,7 +44,7 @@ class HorizontalCard extends StatelessWidget {
                   height: 40.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color:  Colors.whie,
+                    color:  Colors.white,
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: Image.network(
@@ -166,7 +163,7 @@ class HorizontalCard extends StatelessWidget {
                             maxLines: 1,
                             style: TextStyle(
                               fontFamily: 'Gilroy',
-                              color: Color(0xff6750A4),
+                              color: const Color(0xff6750A4),
                               fontSize: 10.sp,
                             ),
                           )

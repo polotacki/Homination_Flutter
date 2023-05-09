@@ -40,6 +40,9 @@ class LoginScreen extends StatelessWidget {
                               print("============= Welcome to Homination =============");
                               print("name: ${state.loginModel.username}    Token:${state.loginModel.token}" );
                               print("loggedIn Successfully");
+                              CacheHelper.saveData(key: "profilePic", value: state.loginModel.profilePic);
+                              CacheHelper.saveData(key: "name", value: state.loginModel.name);
+                              CacheHelper.saveData(key: "sId", value: state.loginModel.sId);
                               CacheHelper.saveData(key: "Token", value: state.loginModel.token).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(
                                   builder: (context) => const HomeLayout())));
                               print("sharedprefrences :${CacheHelper.getData(key: "Token")}");
@@ -72,8 +75,8 @@ class LoginScreen extends StatelessWidget {
                                 children: [
                                   SizedBox(height: 100.h),
 
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 30.0),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 30.0),
                                     child: Text(
                                       "Welcome Back!",
                                       style: TextStyle(fontFamily: "Poppins",
@@ -82,8 +85,8 @@ class LoginScreen extends StatelessWidget {
                                           color: Color(0xFF1A1D1E)),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                         left: 30.0, top: 10),
                                     child: Text(
                                       "Fill your details ",
@@ -120,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                                           FocusScope.of(context).nextFocus(),
 
                                       decoration: InputDecoration(
-                                        prefixIcon: Icon(
+                                        prefixIcon: const Icon(
                                           Iconsax.sms,
                                           color: secondaryColor,
                                         ),
@@ -128,28 +131,28 @@ class LoginScreen extends StatelessWidget {
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.white)),
-                                        hintStyle:  TextStyle(fontFamily: "Poppins",
+                                        hintStyle:  const TextStyle(fontFamily: "Poppins",
                                             fontWeight: FontWeight.normal,
                                             fontSize: 16,
                                             color: Color(0xFF6A6A6A)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.white)),
                                         errorBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.red)),
                                         focusedErrorBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.red)),
-                                        errorStyle:  TextStyle(fontFamily: "Poppins",
+                                        errorStyle:  const TextStyle(fontFamily: "Poppins",
                                             fontWeight: FontWeight.normal,
                                             fontSize: 12,
                                             color: Colors.red),
@@ -173,7 +176,7 @@ class LoginScreen extends StatelessWidget {
                                       },
                                       obscureText: !cubit.passwordVisible,
                                       decoration: InputDecoration(
-                                        prefixIcon: Icon(
+                                        prefixIcon: const Icon(
                                           Iconsax.lock,
                                           color: secondaryColor,
                                         ),
@@ -195,28 +198,28 @@ class LoginScreen extends StatelessWidget {
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.white)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.white)),
-                                        hintStyle:  TextStyle(fontFamily: "Poppins",
+                                        hintStyle:  const TextStyle(fontFamily: "Poppins",
                                             fontWeight: FontWeight.normal,
                                             fontSize: 16,
                                             color: secondaryColor),
                                         errorBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.red)),
                                         focusedErrorBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 color: Colors.red)),
-                                        errorStyle:  TextStyle(fontFamily: "Poppins",
+                                        errorStyle:  const TextStyle(fontFamily: "Poppins",
                                             fontWeight: FontWeight.normal,
                                             fontSize: 12,
                                             color: Colors.red),
@@ -252,7 +255,7 @@ class LoginScreen extends StatelessWidget {
                                               print("not ok");
                                             }
                                           },
-                                          child:Text(
+                                          child:const Text(
                                             "LOG IN",
                                             style:  TextStyle(fontFamily: "Poppins",
                                                 fontWeight: FontWeight
@@ -269,7 +272,7 @@ class LoginScreen extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment
                                             .center,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "New User? ",
                                             style:  TextStyle(fontFamily: "Poppins",
                                                 fontWeight: FontWeight.w500,
@@ -282,9 +285,9 @@ class LoginScreen extends StatelessWidget {
                                                   context,
                                                   new MaterialPageRoute(
                                                       builder: (context) =>
-                                                          Signup()));
+                                                          const Signup()));
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               "Create Account",
                                               style:  TextStyle(fontFamily: "Poppins",
                                                   fontWeight: FontWeight.w500,

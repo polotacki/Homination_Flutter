@@ -4,9 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:homaination_mobile/model/services_model.dart';
 import 'package:homaination_mobile/shared/network/remote/http_helper.dart';
 import 'package:meta/meta.dart';
-
-import '../../../shared/components/constants.dart';
 import '../../../shared/network/end_points.dart';
+import '../../../shared/network/local/cache_helper.dart';
 
 part 'home_state.dart';
 
@@ -14,6 +13,7 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
   static HomeCubit get(context) => BlocProvider.of(context);
   List<ServicesModel>? services;
+  var profilePic=CacheHelper.getData(key: "profilePic");
   void getServicesData() {
     emit(ServicesLoading());
     HttpHelper.getData(url: servicesEndPoint).then((response) {
