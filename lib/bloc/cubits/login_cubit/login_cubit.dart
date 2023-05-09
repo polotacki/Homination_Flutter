@@ -27,7 +27,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginPasswordChanged(password));
   }
 
-  bool passwordVisible = true;
+  bool passwordVisible = false;
   IconData suffixIcon = Icons.visibility;
   Color suffixColor = Colors.blue;
 

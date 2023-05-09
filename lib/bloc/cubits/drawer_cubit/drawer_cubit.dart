@@ -21,6 +21,9 @@ class DrawerCubit extends Cubit<DrawerState> {
 
   void selectLogout(context) {
     CacheHelper.removeData(key: "Token");
+    CacheHelper.removeData(key: "profilePic");
+    CacheHelper.removeData(key: "name");
+    CacheHelper.removeData(key: "email");
     print(CacheHelper.getData(key: "Token"));
     emit(SelectLogoutState());
     Navigator.pop(context); // Pop the drawer

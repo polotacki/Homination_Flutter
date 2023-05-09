@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:homaination_mobile/shared/style/constants.dart';
 
 class ProfileMenu extends StatelessWidget {
   const ProfileMenu({
@@ -9,32 +11,29 @@ class ProfileMenu extends StatelessWidget {
     this.press,
   }) : super(key: key);
 
-  final String text, icon;
+  final String text;
+  final IconData icon;
   final VoidCallback? press;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: const EdgeInsets.symmetric( vertical: 10),
       child: TextButton(
         style: TextButton.styleFrom(
 
-          padding: const EdgeInsets.all(20),
+
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          backgroundColor: const Color(0xFFF5F6F9),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+          backgroundColor:  Colors.white,
         ),
         onPressed: press,
         child: Row(
           children: [
-            SvgPicture.asset(
-              icon,
-              
-              width: 22,
-            ),
+            Icon(icon,color: buttonColor,),
             const SizedBox(width: 20),
-            Expanded(child: Text(text)),
-            const Icon(Icons.arrow_forward_ios),
+            Expanded(child: Text(text,style: TextStyle(fontFamily: "Poppins",fontSize: 16.sp,fontWeight:FontWeight.normal,color: Colors.black ),)),
+            const Icon(Icons.arrow_forward_ios,color: Color(0xff6a6a6a),),
           ],
         ),
       ),

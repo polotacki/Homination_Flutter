@@ -14,7 +14,6 @@ class _NotificationSettingsScreenState
   bool _gotAcceptedEnabled = false;
   bool _getRejectedEnabled = true;
   bool _massageEnabled = false;
-  bool _callEnabled = true;
   bool _darkModeEnabled = false;
 
   @override
