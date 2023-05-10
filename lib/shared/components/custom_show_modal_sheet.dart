@@ -18,18 +18,8 @@ class CustomModalBottomSheet extends StatelessWidget {
    CustomModalBottomSheet({Key? key, required this.service}) : super(key: key);
 
    final ServicesModel service;
-int _currentIndex = 0;
-final _controller = PageController(initialPage: 0);
 
-void _onTap(int index) {
-  _currentIndex = index;
 
-  _controller.animateToPage(
-    index,
-    duration: const Duration(seconds: 1),
-    curve: Curves.easeInOut,
-  );
-}
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -116,8 +106,8 @@ void _onTap(int index) {
                   padding: EdgeInsets.symmetric(horizontal: 20.0.w),
                   child: CustomNavBar(
                     children: ["About Us", "Company", "Reviews"],
-                    currentIndex: _currentIndex,
-                    onTap: _onTap,
+                    currentIndex: cubit.currentIndex,
+                    onTap:  (index) => cubit.buttonSelected(index),
                   )),
               SizedBox(
                 height: 40.h,
@@ -132,7 +122,7 @@ void _onTap(int index) {
                     height: 250.h,
                     child: PageView(
                         scrollDirection: Axis.horizontal,
-                        controller: _controller,
+                        controller: cubit.controller,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

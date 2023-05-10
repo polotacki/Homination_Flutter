@@ -5,3 +5,5 @@ part of 'custom_modal_bottom_sheet_cubit.dart';
 abstract class CustomModalBottomSheetState {}
 
 class CustomModalBottomSheetInitial extends CustomModalBottomSheetState {}
+
+class CustomModalBottomSheetButtonSelected extends CustomModalBottomSheetState {}

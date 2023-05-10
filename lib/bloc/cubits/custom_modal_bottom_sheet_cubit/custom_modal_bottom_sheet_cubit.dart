@@ -9,5 +9,19 @@ class CustomModalBottomSheetCubit extends Cubit<CustomModalBottomSheetState> {
 
   static CustomModalBottomSheetCubit get(context) => BlocProvider.of(context);
 
+  int currentIndex = 0;
 
+  PageController controller = PageController(initialPage: 0);
+
+    buttonSelected(int index) {
+
+    currentIndex = index;
+
+    controller.animateToPage(
+      index,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
+    emit(CustomModalBottomSheetButtonSelected());
+  }
 }
