@@ -21,7 +21,16 @@ class HorizontalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(onTap: (){ CustomShowBottomSheet(context,service);},
+    return GestureDetector(onTap: (){  showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return
+             CustomModalBottomSheet(service: service);
+
+      },
+    );
+    },
       child: Container(
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
@@ -140,7 +149,15 @@ class HorizontalCard extends StatelessWidget {
                     fillColor: Colors.white,
                     splashColor: Colors.grey,
                     onPressed: () {
-                      CustomShowBottomSheet(context,service);
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return
+                            CustomModalBottomSheet(service: service);
+
+                        },
+                      );
 
 
                     },

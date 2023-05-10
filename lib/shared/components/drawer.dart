@@ -102,7 +102,7 @@ class MyDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading:   FaIcon(FontAwesomeIcons.gear,
-                      color: Color(0xffFF9087),
+                      color: Color(0xff2CB9B5),
                       size: 36,
                     ),
                     title: Text(

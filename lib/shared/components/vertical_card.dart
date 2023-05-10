@@ -47,7 +47,15 @@ class VerticalCard extends StatelessWidget {
     }
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 20.0.h),
-      child: GestureDetector(onTap: (){CustomShowBottomSheet(context,service);},
+      child: GestureDetector(onTap: (){showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return
+            CustomModalBottomSheet(service: service);
+
+        },
+      );},
         child: Container(
           height: 160.h,
           padding: const EdgeInsets.all(10.0),
