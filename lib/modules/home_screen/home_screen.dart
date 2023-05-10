@@ -18,7 +18,6 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  var searchCtrl = TextEditingController();
 
 
   double calculateAverageRating(List<Review> reviews) {
@@ -118,7 +117,7 @@ class HomeScreen extends StatelessWidget {
                                   padding: const EdgeInsets.only(right: 15.0),
                                   child: TextField(
                                     textAlign: TextAlign.left,
-                                    controller: searchCtrl,
+                                    controller: cubit.searchCtrl,
                                     keyboardType: TextInputType.text,
                                     decoration: InputDecoration(
                                       hintText: 'Search here...',
@@ -135,15 +134,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       suffixIcon: IconButton(
                                         onPressed: () {
-                                          searchCtrl.text;
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => SearchPage(
-                                                query: searchCtrl.text,service: (state as ServicesSuccess).servicesModel,
-                                              ),
-                                            ),
-                                          );
+                                          cubit.search(context,(state as ServicesSuccess).servicesModel);
                                         },
                                         icon: const Icon(Icons.search),
                                       ),

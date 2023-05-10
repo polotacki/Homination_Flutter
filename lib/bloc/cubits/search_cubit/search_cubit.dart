@@ -1,4 +1,5 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../model/services_model.dart';
@@ -6,15 +7,28 @@ import '../../../model/services_model.dart';
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  SearchCubit() : super(SearchInitial());
+  final List<ServicesModel> servicesModel;
+  final searchCtrl = TextEditingController();
+  List<ServicesModel> searchResults = [];
 
-  void searchQueryChanged(String query,servicesModel) {
+  SearchCubit({required this.servicesModel}) : super(SearchInitial()) {
+    searchCtrl.addListener(() {
+      searchQueryChanged(servicesModel);
+    });
+  }
+  static SearchCubit get(context) => BlocProvider.of(context);
+
+  void searchQueryChanged(servicesModel) {
+
     final filteredServices = servicesModel
         .where((service) =>
-    service.provider.toLowerCase().contains(query.toLowerCase()) ||
-        service.desc.toLowerCase().contains(query.toLowerCase()) ||
-        service.title.toLowerCase().contains(query.toLowerCase()))
+    service.provider.toLowerCase().contains(searchCtrl.text.toLowerCase()) ||
+        service.desc.toLowerCase().contains(searchCtrl.text.toLowerCase()) ||
+        service.title.toLowerCase().contains(searchCtrl.text.toLowerCase()))
         .toList();
+    searchResults = [];
+
+    searchResults.addAll(filteredServices);
 
     emit(SearchResultsLoaded(filteredServices));
   }
