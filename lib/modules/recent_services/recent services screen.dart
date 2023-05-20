@@ -7,17 +7,19 @@ import 'package:iconsax/iconsax.dart';
 import '../../bloc/cubits/home_cubit/home_cubit.dart';
 import '../../model/services_model.dart';
 
-
-
 class RecentServicesScreen extends StatefulWidget {
-  RecentServicesScreen( {super.key, required this.servicesModel,});
+  RecentServicesScreen({
+    super.key,
+    required this.servicesModel,
+  });
+
   final List<ServicesModel> servicesModel;
+
   @override
   _RecentServicesScreenState createState() => _RecentServicesScreenState();
 }
 
 class _RecentServicesScreenState extends State<RecentServicesScreen> {
-
   String _sortBy = 'Price'; // default sort by price
   bool _isAscending = true;
 
@@ -37,112 +39,170 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
     return totalRating / reviews.length;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => HomeCubit(),
-    child: BlocConsumer<HomeCubit, HomeState>(
+        child: BlocConsumer<HomeCubit, HomeState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              print(widget.servicesModel);
+              void _sortServices(String sortBy, bool isAscending) {
+                setState(() {
+                  _sortBy = sortBy;
+                  _isAscending = isAscending;
 
-    listener: (context, state) {},
-    builder: (context, state) {
+                  // sort the services list based on the selected criteria
+                  switch (sortBy) {
+                    case 'Name':
+                      widget.servicesModel.sort((a, b) => isAscending
+                          ? a.title.compareTo(b.title)
+                          : b.title.compareTo(a.title));
+                      break;
+                    case 'Price':
+                      widget.servicesModel.sort((a, b) => isAscending
+                          ? a.price.compareTo(b.price)
+                          : b.price.compareTo(a.price));
+                      break;
+                    case 'Reviews':
+                      widget.servicesModel.sort((a, b) => isAscending
+                          ? a.reviews.length.compareTo(b.reviews.length)
+                          : b.reviews.length.compareTo(a.reviews.length));
+                      break;
+                  }
+                });
+              }
 
-
-
-
-    print(widget.servicesModel);
-    void _sortServices(String sortBy, bool isAscending) {
-      setState(() {
-        _sortBy = sortBy;
-        _isAscending = isAscending;
-
-        // sort the services list based on the selected criteria
-        switch (sortBy) {
-          case 'Name':
-            widget.servicesModel.sort((a, b) =>
-            isAscending ? a.title.compareTo(b.title) : b.title.compareTo(a.title));
-            break;
-          case 'Price':
-            widget.servicesModel.sort((a, b) =>
-            isAscending ? a.price .compareTo(b.price) : b.price.compareTo(a.price));
-            break;
-          case 'Reviews':
-
-            widget.servicesModel.sort((a, b) =>
-            isAscending
-                ? a.reviews.length.compareTo(b.reviews.length)
-                : b.reviews.length.compareTo(a.reviews.length));
-            break;
-        }
-      });
-    }
-
-    return Scaffold(
-      appBar: AppBar(elevation: 0,scrolledUnderElevation: 0.0,
-        title: Text('Recent Services',style:TextStyle(
-            fontFamily: 'Poppins',
-            color: Colors.black,
-            fontSize: 20.sp,
-            fontWeight: FontWeight.bold) ,),centerTitle: true,leading: IconButton(icon: Icon(Iconsax.arrow_left_24,),onPressed: (){Navigator.of(context).pop();}),
-      ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () => _sortServices('Name', _sortBy != 'Name' || !_isAscending),
-                child: Row(
-                  children: [
-                    Text('Sort by Name',style: TextStyle(
-                        fontSize: 12.sp,
+              return Scaffold(
+                appBar: AppBar(
+                  elevation: 0,
+                  scrolledUnderElevation: 0.0,
+                  title: Text(
+                    'Recent Services',
+                    style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500),),
-                    if (_sortBy == 'Name')
-                      Icon(_isAscending ? Iconsax.arrow_up_1 : Iconsax.arrow_down_2),
+                        color: Colors.black,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  centerTitle: true,
+                  leading: IconButton(
+                      icon: Icon(
+                        Iconsax.arrow_left_24,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                ),
+                body: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => _sortServices(
+                              'Name', _sortBy != 'Name' || !_isAscending),
+                          style: ButtonStyle(
+                            padding:
+                                MaterialStateProperty.all(EdgeInsets.all(8)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8))),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Sort by Name',
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              if (_sortBy == 'Name')
+                                Icon(
+                                    _isAscending
+                                        ? Iconsax.arrow_up_1
+                                        : Iconsax.arrow_down_2,
+                                    size: 18.sp),
+                            ],
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => _sortServices(
+                              'Price', _sortBy != 'Price' || !_isAscending),
+                          style: ButtonStyle(
+                            padding:
+                                MaterialStateProperty.all(EdgeInsets.all(8)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8))),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Sort by Price',
+                                style: TextStyle(
+                                    fontSize: 12.sp,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              if (_sortBy == 'Price')
+                                Icon(
+                                    _isAscending
+                                        ? Iconsax.arrow_up_1
+                                        : Iconsax.arrow_down_2,
+                                    size: 18.sp),
+                            ],
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () => _sortServices(
+                              'Reviews', _sortBy != 'Reviews' || !_isAscending),
+                          style: ButtonStyle(
+                            padding:
+                                MaterialStateProperty.all(EdgeInsets.all(8)),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8))),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Sort by Reviews',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              if (_sortBy == 'Reviews')
+                                Icon(
+                                    _isAscending
+                                        ? Iconsax.arrow_up_1
+                                        : Iconsax.arrow_down_2,
+                                    size: 18.sp),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Scrollbar(
+                        child: ListView.builder(
+                          itemCount: widget.servicesModel.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return HorizontalCard(
+                              service: widget.servicesModel[index],
+                              avarageRate: calculateAverageRating(
+                                  widget.servicesModel[index].reviews),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () => _sortServices('Price', _sortBy != 'Price' || !_isAscending),
-                child: Row(
-                  children: [
-                    Text('Sort by Price',style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500),),
-                    if (_sortBy == 'Price')
-                      Icon(_isAscending ? Iconsax.arrow_up_1 : Iconsax.arrow_down_2),
-                  ],
-                ),
-                ),
-              ElevatedButton(
-                onPressed: () => _sortServices('Reviews', _sortBy != 'Reviews' || !_isAscending),
-                child: Row(
-                  children: [
-                    Text('Sort by Reviews',style: TextStyle(
-                        fontSize: 12.sp,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500),),
-                    if (_sortBy == 'Reviews')
-                      Icon(_isAscending ? Iconsax.arrow_up_1 : Iconsax.arrow_down_2),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Scrollbar(
-              child: ListView.builder(
-                itemCount: widget.servicesModel.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return HorizontalCard(service: widget.servicesModel[index],avarageRate:  calculateAverageRating(widget.servicesModel[index].reviews), );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    })); }
+              );
+            }));
+  }
 }

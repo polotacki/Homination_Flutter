@@ -14,7 +14,7 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitial());
   static HomeCubit get(context) => BlocProvider.of(context);
-  List<ServicesModel>? services;
+  List<ServicesModel> services = [];
   var profilePic=CacheHelper.getData(key: "profilePic");
   var searchCtrl = TextEditingController();
 
@@ -24,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
       if (response.statusCode == 200) {
         print('API call successful, response body:');
         print(response.body);
-        List<ServicesModel> services =
+        services =
         (jsonDecode(response.body) as List)
             .map((serviceJson) => ServicesModel.fromJson(serviceJson))
             .toList();
@@ -42,7 +42,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(ServicesError(error.toString()));
     });
   }
-void search(context,service){
+void search(context,service,filters){
   searchCtrl.text;
   Navigator.push(
     context,
@@ -52,6 +52,7 @@ void search(context,service){
       ),
     ),
   );
+  print(service);
   emit(SearchQueryState());
 }
 }

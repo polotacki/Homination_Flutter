@@ -4,7 +4,8 @@
   import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 
-  import '../../bloc/cubits/search_cubit/search_cubit.dart';
+  import '../../bloc/cubits/home_cubit/home_cubit.dart';
+import '../../bloc/cubits/search_cubit/search_cubit.dart';
   import '../../model/services_model.dart';
   import '../../shared/components/filter_modal_bottom_sheet.dart';
   import '../../shared/components/horizontal_card.dart';
@@ -13,21 +14,16 @@ import 'package:lottie/lottie.dart';
 
       final String query;
 
-
-
     final List<ServicesModel> service;
 
     double calculateAverageRating(List<Review> reviews) {
       if (reviews.isEmpty) {
         return 0.0;
       }
-
       int totalRating = 0;
-
       for (var review in reviews) {
         totalRating += review.rating;
       }
-
       return totalRating / reviews.length;
     }
 
@@ -35,12 +31,13 @@ import 'package:lottie/lottie.dart';
     Widget build(BuildContext context) {
       return
         BlocProvider(
-          create: (context) => SearchCubit(servicesModel: service)..searchQueryChanged(service),
+          create: (context) => SearchCubit(servicesModel: BlocProvider.of<HomeCubit>(context).services)..searchQueryChanged(service),
           child: BlocConsumer<SearchCubit, SearchState>(
 
               listener: (context, state) {},
               builder: (context, state) {
                 var cubit = SearchCubit.get(context);
+                print("filters in search :  ");
                 return Scaffold(
                   appBar: AppBar(
                     title: Text('Search',style: TextStyle(
@@ -48,7 +45,13 @@ import 'package:lottie/lottie.dart';
                         color: Colors.black,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold),
-                    ), centerTitle: true,
+                    ), centerTitle: true, leading: IconButton(
+                      icon: Icon(
+                        Iconsax.arrow_left_24,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
                   ),
                   body:  SingleChildScrollView(
                     child: Column(

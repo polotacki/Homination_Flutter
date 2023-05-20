@@ -9,6 +9,7 @@ import 'package:homaination_mobile/shared/components/horizontal_card.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../bloc/cubits/filter_cubit/filter_cubit.dart';
 import '../../model/services_model.dart';
 import '../../shared/components/filter_modal_bottom_sheet.dart';
 import '../../shared/components/vertical_card.dart';
@@ -46,8 +47,8 @@ class HomeScreen extends StatelessWidget {
             listener: (context, state) {},
             builder: (context, state) {
 
-        var cubit=HomeCubit.get(context);
-
+        var cubit=context.read<HomeCubit>();
+        final filterCubit = context.read<FilterCubit>();
 
 
               return Scaffold(
@@ -134,8 +135,9 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       suffixIcon: IconButton(
                                         onPressed: () {
-                                          cubit.search(context,(state as ServicesSuccess).servicesModel);
-                                        },
+
+                                          cubit.search(context, cubit.services,filterCubit.filters);
+                                           },
                                         icon: const Icon(Icons.search),
                                       ),
                                       filled: true,
@@ -190,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (_) => RecentServicesScreen(servicesModel: (state as ServicesSuccess).servicesModel),
+                                      builder: (_) => RecentServicesScreen(servicesModel: cubit.services),
                                     ),
                                   );
                                 },
@@ -213,9 +215,9 @@ class HomeScreen extends StatelessWidget {
                               top: 20.0,
                             ),
                             child: ConditionalBuilder(
-                                condition: state is ServicesSuccess,
+                                condition: cubit.services.isNotEmpty,
                                 builder: (context) {
-                                  final services = (state as ServicesSuccess).servicesModel;
+                                  final services = cubit.services;
                                   List<Widget> cardList = services.map((service) {
                                     return VerticalCard(
                                       cardName: service.title,
@@ -305,7 +307,7 @@ class HomeScreen extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => RecentServicesScreen(servicesModel: (state as ServicesSuccess).servicesModel
+                                        builder: (_) => RecentServicesScreen(servicesModel:cubit.services
                                       ),)
                                     );
                                   },
@@ -315,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (_) =>
-                                              RecentServicesScreen(servicesModel: (state as ServicesSuccess).servicesModel)
+                                              RecentServicesScreen(servicesModel: cubit.services)
                                         ),
                                       );
                                     },
@@ -339,9 +341,9 @@ class HomeScreen extends StatelessWidget {
                               child: Scrollbar(
                                 radius: const Radius.circular(10),
                                 child: ConditionalBuilder(
-                                  condition: state is ServicesSuccess,
+                                  condition: cubit.services.isNotEmpty,
                                   builder: (context) {
-                                    final services = (state as ServicesSuccess).servicesModel;
+                                    final services = cubit.services;
                                     return ListView.separated(
                                       padding: const EdgeInsets.all(8),
                                       itemCount: services.length,

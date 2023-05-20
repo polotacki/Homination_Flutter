@@ -51,9 +51,7 @@ Future<void> main() async {
         BlocProvider<LoginCubit>(
           create: (context) => LoginCubit(),
         ),
-        BlocProvider<SearchCubit>(
-          create: (context) => SearchCubit(servicesModel: []),
-        ),
+
       ],
       child: MyApp(isDark: isDark, startScreen: widget),
     ),
