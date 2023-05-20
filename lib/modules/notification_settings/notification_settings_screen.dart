@@ -53,12 +53,7 @@ class _NotificationSettingsScreenState
             (value) => setState(() => _massageEnabled = value),
           ),
 
-          _buildNotificationSetting(
-            'Dark Mode',
-            'Enable or disable dark mode',
-            _darkModeEnabled,
-            (value) => setState(() => _darkModeEnabled = value),
-          ),
+
         ],
       ),
     );

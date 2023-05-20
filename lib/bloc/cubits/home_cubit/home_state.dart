@@ -18,3 +18,4 @@ class ServicesSuccess extends HomeState {
 
   ServicesSuccess(this.servicesModel);
 }
+class SearchQueryState extends HomeState {}
