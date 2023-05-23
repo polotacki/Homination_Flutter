@@ -9,6 +9,7 @@ import '../../bloc/cubits/proposal_history/proposal_history_cubit.dart';
 import '../../model/proposal_history.dart';
 import '../../shared/components/application_card.dart';
 import '../../shared/components/overall_radial_bar_chart.dart';
+import '../request_description/request_description.dart';
 
 
 class ProposalsHistory extends StatelessWidget {
@@ -60,13 +61,21 @@ class ProposalsHistory extends StatelessWidget {
 
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ApplicationCard(companyImage: "",
-                    providerName: proposalHistory.providerName,
-                      serviceTitle: proposalHistory.serviceName,
-                    createdAt : proposalHistory.createdAt,
-                    status: proposalHistory.status,
-                    updatedAt: proposalHistory.updatedAt,
+                  child: GestureDetector(onTap: (){Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) => RequestDescriptionScreen(
+                    requestDescription: proposalHistory.requestDescription
 
+                  )));},
+                    child: ApplicationCard(companyImage: "",
+                      providerName: proposalHistory.providerName,
+                        serviceTitle: proposalHistory.serviceName,
+                      createdAt : proposalHistory.createdAt,
+                      status: proposalHistory.status,
+                      updatedAt: proposalHistory.updatedAt,
+
+                    ),
                   ),
                 );
               },
