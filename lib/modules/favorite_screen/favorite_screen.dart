@@ -11,7 +11,7 @@ import '../../model/services_model.dart';
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});
 
-  double _calculateAverageRating(List<Review> reviews) {
+  double _calculateAverageRating(List reviews) {
     if (reviews.isEmpty) {
       return 0.0;
     }
@@ -19,7 +19,7 @@ class FavoriteScreen extends StatelessWidget {
     int totalRating = 0;
 
     for (var review in reviews) {
-      totalRating += review.rating;
+      totalRating += 0;
     }
 
     return totalRating / reviews.length;
@@ -51,8 +51,7 @@ class FavoriteScreen extends StatelessWidget {
                             child: FadeInAnimation(
                                 child: HorizontalCard(
                                     service: HomeCubit.get(context).services![index],
-                                    avarageRate: _calculateAverageRating(
-                                        HomeCubit.get(context).services![index].reviews)))));
+                                    avarageRate: 0))));
                   },
                   separatorBuilder: (context, index) => const Divider(
                         color: Colors.transparent,

@@ -16,14 +16,11 @@ class FilterCubit extends Cubit<FilterState> {
   String? selectedCategory ;
   String? selectedLocation ;
   final List<String> searchCategories = [
-    'Architects & Building Designers',
-    'General Contractors',
+
+
     'Foundation Builder',
-    'Interior Designers & Decorators',
-    'Kitchen & Bathroom Designers',
-    'Kitchen & Bathroom Remodelers',
-    'Landscape Architects & Landscape Designers',
-    'Landscape Contractors',
+    'Interior Designers and Decorators',
+
   ];
   final List<String> searchLocations = [
     'cairo',

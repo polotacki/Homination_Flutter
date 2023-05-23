@@ -14,7 +14,7 @@ import '../../bloc/cubits/filter_cubit/filter_cubit.dart';
 import '../style/constants.dart';
 
 class FilterModalBottomSheet extends StatelessWidget {
-   const FilterModalBottomSheet({Key? key}) : super(key: key);
+   const FilterModalBottomSheet({Key? key, required List<ServicesModel> servicesModel}) : super(key: key);
 
 
 
@@ -465,8 +465,9 @@ class FilterModalBottomSheet extends StatelessWidget {
 
 
                                     filterCubit.applyFilters();
+                                    print(filterCubit.filters);
 
-                                    Navigator.pop(context);
+                                    Navigator.pop(context,filterCubit.filters);
                                     /*Navigator.push(context, MaterialPageRoute(
                                         builder: (_) =>
                                             SearchPage(query: "",

@@ -50,6 +50,7 @@ class LoginCubit extends Cubit<LoginState> {
         'username': username,
         'password': password,
       },
+      headers: {'Content-Type': 'application/json'}
     ).then((response) {
       if (response.statusCode == 200) {
         print(response.body);

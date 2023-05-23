@@ -7,7 +7,7 @@ import 'package:homaination_mobile/shared/network/local/cache_helper.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../bloc/cubits/drawer_cubit/drawer_cubit.dart';
-import '../../modules/edit_profile.dart';
+import '../../modules/edit_profile/edit_profile.dart';
 import '../../modules/proposals_history/proposals_history_screen.dart';
 import '../style/constants.dart';
 
@@ -26,7 +26,7 @@ class MyDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: CacheHelper.getData(key: "profilePic") !=
+                    backgroundImage: CacheHelper.getData(key: "profilePic") ==
                             null
                         ? NetworkImage(CacheHelper.getData(key: "profilePic"))
                         : const AssetImage('assets/images/anonymous.png')

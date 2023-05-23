@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../model/service_application_model.dart';
+import '../../model/proposal_history.dart';
 import '../network/local/cache_helper.dart';
 
 class OverallRadialBarChart extends StatelessWidget {
-  final Map<String, ServiceApplication> applications;
+  final List<ProposalHistory> applications;
 
   const OverallRadialBarChart({Key? key, required this.applications})
       : super(key: key);
@@ -16,26 +16,26 @@ class OverallRadialBarChart extends StatelessWidget {
     double acceptedCount = 0;
     double pendingCount = 0;
     double rejectedCount = 0;
-    applications.values.forEach((application) {
+    for (var application in applications) {
       switch (application.status) {
-        case "Accepted":
+        case "accepted":
           acceptedCount++;
           break;
-        case "Pending":
+        case "pending":
           pendingCount++;
           break;
-        case "Rejected":
+        case "rejected":
           rejectedCount++;
           break;
       }
-    });
+    }
 
     List<_StatusData> chartData = [
       _StatusData("Accepted", acceptedCount),
       _StatusData("Pending", pendingCount),
       _StatusData("Rejected", rejectedCount),
     ];
-
+    var profilePic =CacheHelper.getData(key: "profilePic");
     return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
       Container(
         height: 250,
@@ -63,9 +63,9 @@ class OverallRadialBarChart extends StatelessWidget {
           ],annotations:  <CircularChartAnnotation>[
           CircularChartAnnotation(
             widget: CircleAvatar(
-              backgroundImage:NetworkImage(
-                CacheHelper.getData(key: "profilePic"),
-              )as ImageProvider,
+              backgroundImage:profilePic==null?NetworkImage(
+                profilePic
+              )as ImageProvider:AssetImage("assets/images/anonymous.png")
             ),height: "100",width: "100"
           ),
         ],

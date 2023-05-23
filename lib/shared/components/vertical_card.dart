@@ -5,6 +5,7 @@ import 'package:homaination_mobile/shared/style/constants.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../model/review_model.dart';
 import '../../model/services_model.dart';
 import 'custom_show_modal_sheet.dart';
 
@@ -40,7 +41,7 @@ class VerticalCard extends StatelessWidget {
       int totalRating = 0;
 
       for (var review in reviews) {
-        totalRating += review.rating;
+        totalRating += review.rating!;
       }
 
       return totalRating / reviews.length;

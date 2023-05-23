@@ -5,6 +5,7 @@ import 'package:homaination_mobile/shared/components/horizontal_card.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../bloc/cubits/home_cubit/home_cubit.dart';
+import '../../model/review_model.dart';
 import '../../model/services_model.dart';
 
 class RecentServicesScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
     int totalRating = 0;
 
     for (var review in reviews) {
-      totalRating += review.rating;
+      totalRating += review.rating!;
     }
 
     return totalRating / reviews.length;

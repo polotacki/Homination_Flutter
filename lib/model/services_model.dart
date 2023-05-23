@@ -1,3 +1,5 @@
+import 'package:homaination_mobile/model/review_model.dart';
+
 class ServicesModel {
   List<String> gallery;
   String id;
@@ -42,39 +44,9 @@ class ServicesModel {
       providerImage: json['providerImage'],
       price: json['price'],
       location: json['location'],
-      reviews: List<Review>.from(
-          (json['reviews'] as List).map((review) => Review.fromJson(review))),
+
       createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-    );
-  }
-}
-
-class Review {
-  String id;
-  String image;
-  String name;
-  int rating;
-  String comment;
-  DateTime timestamps;
-
-  Review({
-    required this.id,
-    required this.image,
-    required this.name,
-    required this.rating,
-    required this.comment,
-    required this.timestamps,
-  });
-
-  factory Review.fromJson(Map<String, dynamic> json) {
-    return Review(
-      id: json['_id'],
-      image: json['image'],
-      name: json['name'],
-      rating: json['rating'],
-      comment: json['comment'],
-      timestamps: DateTime.parse(json['timestamps']),
+      updatedAt: DateTime.parse(json['updatedAt']), reviews: [],
     );
   }
 }

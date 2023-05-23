@@ -55,7 +55,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: Image.network(
-                  service.providerImage,
+                  service.providerImage,fit: BoxFit.fill,
                   width: 70,
                   height: 70,
                 ),
@@ -103,7 +103,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                 height: 27.h,
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                  padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                   child: CustomNavBar(
                     children: ["About Us", "Company", "Reviews"],
                     currentIndex: cubit.currentIndex,
@@ -316,7 +316,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                    review.name,
+                                                                    review.clientName,
                                                                     style: TextStyle(
                                                                         fontFamily:
                                                                             'SFPRODISPLAY',
@@ -478,7 +478,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                               String? token = CacheHelper.getData(key: 'Token');
 
                               if (token != null) {
-                                widget = ProposalScreen();
+                                widget = ProposalScreen(proposalService: service,);
                               } else {
                                 widget = LoginScreen();
                               }

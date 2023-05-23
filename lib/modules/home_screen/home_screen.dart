@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homaination_mobile/bloc/cubits/home_cubit/home_cubit.dart';
+import 'package:homaination_mobile/model/filter.dart';
 import 'package:homaination_mobile/modules/recent_services/recent%20services%20screen.dart';
 import 'package:homaination_mobile/shared/components/horizontal_card.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../bloc/cubits/filter_cubit/filter_cubit.dart';
+import '../../model/review_model.dart';
 import '../../model/services_model.dart';
 import '../../shared/components/filter_modal_bottom_sheet.dart';
 import '../../shared/components/vertical_card.dart';
@@ -39,17 +41,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    List<Filter>  filter  =[];
     return BlocProvider(
         create: (context) => HomeCubit()..getServicesData(),
         child: BlocConsumer<HomeCubit, HomeState>(
 
             listener: (context, state) {},
             builder: (context, state) {
-
         var cubit=context.read<HomeCubit>();
         final filterCubit = context.read<FilterCubit>();
-
+        print(cubit.profilePic);
 
               return Scaffold(
                 appBar: AppBar(
@@ -76,13 +77,13 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   actions: [
-                    CacheHelper.getData(key: "Token") != null
+                    CacheHelper.getData(key: "Token") != null &&cubit.profilePic != null
                         ? Padding(
                             padding: const EdgeInsets.only(
                               right: 20.0,
                             ),
                             child: CircleAvatar(
-                              backgroundImage:cubit.profilePic != null
+                              backgroundImage:cubit.profilePic == null
                                   ? NetworkImage(cubit.profilePic)
                                   : const AssetImage('assets/images/anonymous.png')as ImageProvider,
                             ),
@@ -136,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                                       suffixIcon: IconButton(
                                         onPressed: () {
 
-                                          cubit.search(context, cubit.services,filterCubit.filters);
+                                          cubit.search(context, cubit.services,filter);
                                            },
                                         icon: const Icon(Icons.search),
                                       ),
@@ -148,14 +149,17 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               FloatingActionButton(
-                                onPressed: () {
+                                onPressed: () async{
+                               filter = await
                                   showModalBottomSheet(
                                     isScrollControlled: true,
                                     context: context,
-                                    builder: (BuildContext context) {
-                                      return  FilterModalBottomSheet();
-                                    },
+                                    builder: (BuildContext context) =>
+                                        FilterModalBottomSheet(servicesModel: cubit.services),
+
                                   );
+                                  filter.forEach((element) { print(element.location);print(element.category);print(element.minPrice);});
+
                                 },
                                 heroTag: 'filter',
                                 mini: false,
@@ -219,6 +223,7 @@ class HomeScreen extends StatelessWidget {
                                 builder: (context) {
                                   final services = cubit.services;
                                   List<Widget> cardList = services.map((service) {
+
                                     return VerticalCard(
                                       cardName: service.title,
                                       reviews: service.reviews.length,

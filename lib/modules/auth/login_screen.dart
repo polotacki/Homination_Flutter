@@ -42,6 +42,7 @@ class LoginScreen extends StatelessWidget {
                               print("loggedIn Successfully");
                               CacheHelper.saveData(key: "profilePic", value: state.loginModel.profilePic);
                               CacheHelper.saveData(key: "name", value: state.loginModel.name);
+                              CacheHelper.saveData(key: "userName", value: state.loginModel.username);
                               CacheHelper.saveData(key: "email", value: state.loginModel.email);
 
                               CacheHelper.saveData(key: "Token", value: state.loginModel.token).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(

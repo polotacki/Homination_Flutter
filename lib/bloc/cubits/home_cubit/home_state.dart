@@ -18,4 +18,18 @@ class ServicesSuccess extends HomeState {
 
   ServicesSuccess(this.servicesModel);
 }
+
+class ReviewsLoading extends HomeState {}
+
+class ReviewsError extends HomeState {
+  final String error;
+
+  ReviewsError(this.error);
+}
+
+class ReviewsSuccess extends HomeState {
+  final List<Review> reviewModel;
+
+  ReviewsSuccess(this.reviewModel);
+}
 class SearchQueryState extends HomeState {}

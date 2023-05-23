@@ -1,12 +1,12 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 
-import '../../data/service_application_data.dart';
-import '../../model/service_application_model.dart';
+import '../../bloc/cubits/proposal_history/proposal_history_cubit.dart';
+import '../../model/proposal_history.dart';
 import '../../shared/components/application_card.dart';
 import '../../shared/components/overall_radial_bar_chart.dart';
 
@@ -18,6 +18,16 @@ class ProposalsHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => ProposalHistoryCubit()..getProposalHistoryData(),
+        child: BlocConsumer<ProposalHistoryCubit, ProposalHistoryState>(
+
+        listener: (context, state) {},
+    builder: (context, state) {
+
+    var cubit=context.read<ProposalHistoryCubit>();
+
+
     return  Scaffold(
       appBar: AppBar(
         title: Text(
@@ -40,23 +50,23 @@ class ProposalsHistory extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            OverallRadialBarChart(applications: constructionApplications),
+            OverallRadialBarChart(applications: cubit.proposalHistory),
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: constructionApplications.length,
+              itemCount: cubit.proposalHistory.length,
               itemBuilder: (BuildContext context, int index) {
-                String key = constructionApplications.keys.elementAt(index);
-                ServiceApplication application = constructionApplications[key]!;
+                ProposalHistory proposalHistory = cubit.proposalHistory[index];
+
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ApplicationCard(
-                    company: application.company,
-                    jobTitle: application.jobTitle,
-                    city: application.city,
-                    status: application.status,
-                    price: application.price,
-                    companyImage: application.companyImage
+                  child: ApplicationCard(companyImage: "",
+                    providerName: proposalHistory.providerName,
+                      serviceTitle: proposalHistory.serviceName,
+                    createdAt : proposalHistory.createdAt,
+                    status: proposalHistory.status,
+                    updatedAt: proposalHistory.updatedAt,
+
                   ),
                 );
               },
@@ -65,5 +75,5 @@ class ProposalsHistory extends StatelessWidget {
         ),
       ),
     );
-  }
+  }));}
 }
