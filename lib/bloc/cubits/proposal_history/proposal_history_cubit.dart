@@ -5,6 +5,7 @@ import 'package:homaination_mobile/shared/network/local/cache_helper.dart';
 import 'package:meta/meta.dart';
 
 import '../../../model/proposal_history.dart';
+import '../../../model/service_request_model.dart';
 import '../../../shared/network/end_points.dart';
 import '../../../shared/network/remote/http_helper.dart';
 
@@ -31,7 +32,7 @@ class ProposalHistoryCubit extends Cubit<ProposalHistoryState> {
         print(response.body);
         proposalHistory =
             (jsonDecode(response.body) as List)
-                .map((serviceJson) => ProposalHistory.fromJson(serviceJson))
+                .map((serviceJson) => ProposalHistory.fromJson(serviceJson,(json) => SidingContractRequestDetails.fromJson(json)))
                 .toList();
         print('Data processing successful, services:');
         print(proposalHistory);

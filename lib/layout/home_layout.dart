@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../bloc/cubits/app_cupit/app_cubit.dart';
@@ -34,7 +35,7 @@ class HomeLayout extends StatelessWidget {
                 Visibility(
                   visible: !connected,
                   child: Positioned(
-                    top: 87,
+                    top: 123.h,
                     left: 0.0,
                     right: 0.0,
                     child: Container(

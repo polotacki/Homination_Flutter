@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:homaination_mobile/modules/auth/login_screen.dart';
@@ -164,7 +165,7 @@ class MyDrawer extends StatelessWidget {
                       cubit.selectLogout(context);
                     },
                   ),
-                ],
+                ].animate( interval: 100.ms).fadeIn(duration: 900.ms),
               ),
             )
           : Center(

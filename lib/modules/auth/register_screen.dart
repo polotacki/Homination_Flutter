@@ -1,42 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+import 'package:homaination_mobile/bloc/cubits/register_cubit/register_cubit.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../bloc/cubits/login_cubit/login_cubit.dart';
 import '../../model/user_model.dart';
 import '../../shared/style/constants.dart';
 import 'login_screen.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+   RegisterScreen({Key? key}) : super(key: key);
 
-  @override
-  _SignupState createState() => _SignupState();
-}
 
-class _SignupState extends State<Signup> {
+
+
   final _formKey = GlobalKey<FormState>();
 
-  Future save() async {
-    var url = Uri.parse('http://localhost:5000/auth/register');
-    /*var res = await http.post(url, headers: <String, String>{
-      'Context-Type': 'application/json;charSet=UTF-8'
-    },
-        body: <String, String>{
-      'email': user.email,
-      'password': user.password
-    });
-    print(res.body);*/
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => LoginScreen()));
-  }
+
 
   UserModel user = UserModel(username: "",token: "" );
-  bool _passwordVisible = false;
+   TextEditingController _emailController = TextEditingController();
+   TextEditingController _usernameController = TextEditingController();
+   TextEditingController _passwordController = TextEditingController();
+   TextEditingController _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => RegisterCubit(),
+    child:BlocConsumer<RegisterCubit, RegisterState>(
+        listener: (context, state) {
+          if (state is RegisterSuccess) {
+
+              print("============= Welcome to Homination =============");
+
+              print("Registered Successfully");
+              Fluttertoast.showToast(
+                msg: "Registered Successfully",
+                toastLength: Toast.LENGTH_LONG,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) =>  LoginScreen()));
+
+
+
+          } else if (state is RegisterError){
+            Fluttertoast.showToast(
+              msg: "Username or Email already in use",
+              toastLength: Toast.LENGTH_LONG,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+
+
+          }},
+    builder: (context, state) {
+    var cubit = context.read<RegisterCubit>();
+
+
+
     return Scaffold(
+      resizeToAvoidBottomInset: true,
         body: Column(
       children: [
         Container(
@@ -77,13 +109,132 @@ class _SignupState extends State<Signup> {
                 ),
                 SizedBox(
                   height: 54.h,
+                ),Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    controller: _nameController,
+                    onChanged: (email) =>
+                        context.read<LoginCubit>()
+                            .emailChanged(email),
+                    validator: (value) {
+                      /*                if (value!.isEmpty) {
+                          return "* Required";
+                        } else if (RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(value)) {
+                          return null;
+                        } else {
+                          return 'Enter valid email id as "abc@Example.com"';
+                        }*/
+                    },
+                    keyboardType: TextInputType.name,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) =>
+                        FocusScope.of(context).nextFocus(),
+
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Iconsax.user_tag,
+                        color: secondaryColor,
+                      ),
+                      hintText: 'First Name',
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.white)),
+                      hintStyle:  const TextStyle(fontFamily: "Poppins",
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          color: Color(0xFF6A6A6A)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.white)),
+                      errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.red)),
+                      focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.red)),
+                      errorStyle:  const TextStyle(fontFamily: "Poppins",
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                          color: Colors.red),
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: TextFormField(
-                    controller: TextEditingController(text: user.email),
+                    controller: _usernameController,
+                    onChanged: (email) =>
+                        context.read<LoginCubit>()
+                            .emailChanged(email),
+                    validator: (value) {
+                      /*                if (value!.isEmpty) {
+                          return "* Required";
+                        } else if (RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(value)) {
+                          return null;
+                        } else {
+                          return 'Enter valid email id as "abc@Example.com"';
+                        }*/
+                    },
+                    keyboardType: TextInputType.name,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) =>
+                        FocusScope.of(context).nextFocus(),
+
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Iconsax.profile_circle,
+                        color: secondaryColor,
+                      ),
+                      hintText: 'Username',
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.white)),
+                      hintStyle:  const TextStyle(fontFamily: "Poppins",
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          color: Color(0xFF6A6A6A)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.white)),
+                      errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.red)),
+                      focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(
+                              12),
+                          borderSide: const BorderSide(
+                              color: Colors.red)),
+                      errorStyle:  const TextStyle(fontFamily: "Poppins",
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                          color: Colors.red),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    controller: _emailController,
                     onChanged: (value) {
-                      user.email = value;
+                      cubit.emailChanged(value);
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -128,9 +279,9 @@ class _SignupState extends State<Signup> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: TextFormField(
-                    controller: TextEditingController(text: user.token),
+                    controller: _passwordController,
                     onChanged: (value) {
-                      user.token = value;
+                     cubit.passwordChanged(value);
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -141,7 +292,7 @@ class _SignupState extends State<Signup> {
                         return "Password should not be greater than 15 characters";
                       }
                       return null;
-                    },
+                    }, obscureText: !cubit.passwordVisible,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(
                         Iconsax.lock,
@@ -149,16 +300,12 @@ class _SignupState extends State<Signup> {
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                          cubit.suffixIcon,
                           color:
-                              _passwordVisible ? Colors.blue : secondaryColor,
+                          cubit.suffixColor,
                         ),
                         onPressed: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
+                         cubit.changePasswordVisibility();
                         },
                       ),
                       hintText: 'Password',
@@ -201,7 +348,7 @@ class _SignupState extends State<Signup> {
                                 MaterialStateProperty.all(buttonColor)),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            save();
+                            cubit.register(name: _nameController.text, username: _usernameController.text, password: _passwordController.text, email: _emailController.text);
                           } else {
                             print("not ok");
                           }
@@ -246,6 +393,6 @@ class _SignupState extends State<Signup> {
           ),
         )
       ],
-    ));
+    ));}));
   }
 }

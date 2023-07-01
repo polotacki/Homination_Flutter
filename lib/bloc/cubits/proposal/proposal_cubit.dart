@@ -20,13 +20,13 @@ class ProposalCubit extends Cubit<ProposalState> {
       print(token);
       final response = await HttpHelper.postData(
         url: serviceRequestEndPoint,
-        data: serviceRequest.toJson(), headers: {
+        data: serviceRequest.toJson((requestDesc) => requestDesc.toJson()), headers: {
         'Content-Type': 'application/json',
         'Authorization': '$token', // Assuming the token is a JWT, use 'Bearer' prefix
         'Accept': 'application/json', // Add 'Accept' header to specify expected response format
       },
 
-      );   print(serviceRequest.toJson());
+      );   print(serviceRequest.toJson((requestDesc) => requestDesc.toJson()));
       if (response.statusCode == 200) {
         emit(ServiceRequestSuccess());
       } else {

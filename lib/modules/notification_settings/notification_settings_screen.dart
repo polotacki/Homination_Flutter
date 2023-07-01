@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homaination_mobile/shared/style/constants.dart';
 
@@ -41,7 +42,7 @@ class _NotificationSettingsScreenState
             (value) => setState(() => _gotAcceptedEnabled = value),
           ),
           _buildNotificationSetting(
-            'Get Rejected',
+            'Got Rejected',
             'Receive notifications when your request is rejected',
             _getRejectedEnabled,
             (value) => setState(() => _getRejectedEnabled = value),
@@ -54,7 +55,7 @@ class _NotificationSettingsScreenState
           ),
 
 
-        ],
+        ].animate(interval: 200.ms).fadeIn(duration: 600.ms),
       ),
     );
   }

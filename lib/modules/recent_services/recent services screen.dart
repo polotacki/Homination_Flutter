@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:homaination_mobile/shared/components/horizontal_card.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -42,9 +44,7 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => HomeCubit(),
-        child: BlocConsumer<HomeCubit, HomeState>(
+    return  BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {},
             builder: (context, state) {
               print(widget.servicesModel);
@@ -85,15 +85,16 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                         color: Colors.black,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold),
-                  ),
+                  ).animate()
+                      .fadeIn(duration: 300.ms),
                   centerTitle: true,
                   leading: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Iconsax.arrow_left_24,
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
-                      }),
+                      }).animate().fadeIn(duration: 300.ms, delay: 300.ms),
                 ),
                 body: Column(
                   children: [
@@ -105,7 +106,7 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                               'Name', _sortBy != 'Name' || !_isAscending),
                           style: ButtonStyle(
                             padding:
-                                MaterialStateProperty.all(EdgeInsets.all(8)),
+                                MaterialStateProperty.all(const EdgeInsets.all(8)),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
@@ -133,7 +134,7 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                               'Price', _sortBy != 'Price' || !_isAscending),
                           style: ButtonStyle(
                             padding:
-                                MaterialStateProperty.all(EdgeInsets.all(8)),
+                                MaterialStateProperty.all(const EdgeInsets.all(8)),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
@@ -161,7 +162,7 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                               'Reviews', _sortBy != 'Reviews' || !_isAscending),
                           style: ButtonStyle(
                             padding:
-                                MaterialStateProperty.all(EdgeInsets.all(8)),
+                                MaterialStateProperty.all(const EdgeInsets.all(8)),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8))),
@@ -185,18 +186,28 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      ].animate( delay: 600.ms,interval: 200.ms).fadeIn(duration: 900.ms),
+                    ), SizedBox(height:18.h),
                     Expanded(
-                      child: Scrollbar(
-                        child: ListView.builder(
+                      child: Scrollbar(radius: const Radius.circular(50.0),interactive: true,
+                        child: ListView.separated(
                           itemCount: widget.servicesModel.length,
+                          separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10),
                           itemBuilder: (BuildContext context, int index) {
-                            return HorizontalCard(
+                            return AnimationConfiguration
+                                .staggeredList(
+                                position: index,
+                                duration: const Duration(
+                                milliseconds: 375),
+                            child: SlideAnimation(
+                            horizontalOffset: 50.0,
+                            child: FadeInAnimation(
+                            child: HorizontalCard(
                               service: widget.servicesModel[index],
                               avarageRate: calculateAverageRating(
                                   widget.servicesModel[index].reviews),
-                            );
+                            ))));
                           },
                         ),
                       ),
@@ -204,6 +215,6 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                   ],
                 ),
               );
-            }));
+            });
   }
 }

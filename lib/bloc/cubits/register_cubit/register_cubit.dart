@@ -2,68 +2,71 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meta/meta.dart';
 
 import '../../../model/user_model.dart';
 import '../../../shared/network/end_points.dart';
 import '../../../shared/network/remote/http_helper.dart';
 import '../../../shared/style/constants.dart';
 
-part 'login_state.dart';
+part 'register_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
-
-  static LoginCubit get(context) => BlocProvider.of(context);
-  UserModel? loginModel;
+class RegisterCubit extends Cubit<RegisterState> {
+  RegisterCubit() : super(RegisterInitial());
+  static RegisterCubit get(context) => BlocProvider.of(context);
+  UserModel? registerModel;
   void emailChanged(String email) {
     print(email);
 
-    emit(LoginEmailChanged(email));
+    emit(RegisterEmailChanged(email));
   }
 
   void passwordChanged(String password) {
     print(password);
 
-    emit(LoginPasswordChanged(password));
+    emit(RegisterPasswordChanged(password));
   }
 
   bool passwordVisible = false;
   IconData suffixIcon = Icons.visibility_off;
   Color suffixColor = secondaryColor;
-
   void changePasswordVisibility() {
     passwordVisible = !passwordVisible;
     suffixIcon = passwordVisible ? Icons.visibility : Icons.visibility_off;
     suffixColor = passwordVisible ? Colors.blue : secondaryColor;
-    emit(LoginObscurePasswordChanged());
+    emit(RegisterObscurePasswordChanged());
   }
-
-  void login({
+  void register({
+    required String name,
     required String username,
     required String password,
+    required String email,
   }) {
-    emit(LoginLoading());
-    // Make login API call, e.g. using http package
+
+    emit(RegisterLoading());
+
     HttpHelper.postData(
-      url: loginEndPoint,
-      data: {
-        'username': username,
-        'password': password,
-      },
-      headers: {'Content-Type': 'application/json'}
+        url: registerEndPoint,
+        data: {
+          'name': name,
+          'username': username,
+          'email': email,
+          'password': password,
+        },
+        headers: {'Content-Type': 'application/json'}
     ).then((response) {
       if (response.statusCode == 200) {
         print(response.body);
-        loginModel = UserModel.fromJson(jsonDecode(response.body));
+        registerModel = UserModel.fromJson(jsonDecode(response.body));
 
-        emit(LoginSuccess(loginModel!));
+        emit(RegisterSuccess(registerModel!));
       } else {
         print(response.body);
-        emit(LoginError(response.body));
+        emit(RegisterError(response.body));
       }
     }).catchError((response) {
       print(response.toString());
-      emit(LoginError(response.toString()));
+      emit(RegisterError(response.toString()));
     });
   }
 }

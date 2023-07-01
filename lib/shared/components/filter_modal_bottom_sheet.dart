@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homaination_mobile/bloc/cubits/search_cubit/search_cubit.dart';
@@ -9,7 +10,6 @@ import 'package:homaination_mobile/modules/search_page/search_page.dart';
 import 'package:homaination_mobile/shared/components/price_range_text_field.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../bloc/cubits/filter_cubit/filter_cubit.dart';
 import '../../bloc/cubits/filter_cubit/filter_cubit.dart';
 import '../style/constants.dart';
 
@@ -488,7 +488,7 @@ class FilterModalBottomSheet extends StatelessWidget {
                         ),
                       ),
                     )
-                  ],
+                  ].animate( interval: 100.ms).fadeIn(duration: 900.ms),
                 ));
           },
         ));

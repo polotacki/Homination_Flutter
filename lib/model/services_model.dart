@@ -12,6 +12,7 @@ class ServicesModel {
   String providerImage;
   int price;
   String location;
+  bool isFavorite ;
   List<Review> reviews;
   DateTime createdAt;
   DateTime updatedAt;
@@ -27,6 +28,7 @@ class ServicesModel {
     required this.providerImage,
     required this.price,
     required this.location,
+    required this.isFavorite,
     required this.reviews,
     required this.createdAt,
     required this.updatedAt,
@@ -44,7 +46,7 @@ class ServicesModel {
       providerImage: json['providerImage'],
       price: json['price'],
       location: json['location'],
-
+      isFavorite: json['isFavorite'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']), reviews: [],
     );

@@ -33,13 +33,11 @@ dependencies:
 
 
   bloc: ^8.1.1
-  dio: ^5.1.1
   eva_icons_flutter: ^3.1.0
   flutter_rating_bar: ^4.0.1
   font_awesome_flutter: ^10.4.0
   page_indicator: ^0.4.1
   rxdart: ^0.27.7
-  youtube_player_flutter: ^8.1.2
   flutter_bloc: ^8.1.2
   equatable: ^2.0.5
   iconsax: ^0.0.8
@@ -72,6 +70,8 @@ dependencies:
   hive_flutter: ^1.1.0
   provider: ^6.0.5
   intl: ^0.18.1
+  flutter_animate: ^4.2.0
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:
@@ -85,7 +85,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
   hive_generator: ^2.0.0
-  build_runner: ^2.2.0
+  build_runner: ^2.4.5
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
