@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homaination_mobile/model/services_model.dart';
+import 'package:homaination_mobile/modules/proposal/proposal_screen2.dart';
 import 'package:icon_decoration/icon_decoration.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
@@ -32,7 +34,6 @@ class CustomModalBottomSheet extends StatelessWidget {
               var cubit=CustomModalBottomSheetCubit.get(context);
 
 
-
               return FractionallySizedBox(
           heightFactor: 0.88,
           child: Column(
@@ -55,7 +56,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: Image.network(
-                  service.providerImage,
+                  service.providerImage,fit: BoxFit.fill,
                   width: 70,
                   height: 70,
                 ),
@@ -86,7 +87,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                         style: TextStyle(
                             fontFamily: 'Poppins',
                             color: secondaryColor,
-                            fontSize: 14.sp,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.normal)),
                     SizedBox(width: 48.w),
                     Text(
@@ -94,7 +95,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: 'Poppins',
                           color: secondaryColor,
-                          fontSize: 14.sp),
+                          fontSize: 16.sp),
                     ),
                   ],
                 ),
@@ -103,9 +104,9 @@ class CustomModalBottomSheet extends StatelessWidget {
                 height: 27.h,
               ),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                  padding: EdgeInsets.symmetric(horizontal: 10.0.w),
                   child: CustomNavBar(
-                    children: ["About Us", "Company", "Reviews"],
+                    children: const ["About Us", "Company", "Reviews"],
                     currentIndex: cubit.currentIndex,
                     onTap:  (index) => cubit.buttonSelected(index),
                   )),
@@ -150,7 +151,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ],
+                            ].animate( delay:200.ms , interval: 200.ms).fadeIn(duration: 900.ms),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,7 +223,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                                   ),
                                 ],
                               )
-                            ],
+                            ].animate( interval: 200.ms).fadeIn(duration: 900.ms),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -316,7 +317,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                                                             Row(
                                                               children: [
                                                                 Text(
-                                                                    review.name,
+                                                                    review.clientName,
                                                                     style: TextStyle(
                                                                         fontFamily:
                                                                             'SFPRODISPLAY',
@@ -443,7 +444,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                                   ),
                                 ],
                               )
-                            ],
+                            ].animate( interval: 200.ms).fadeIn(duration: 900.ms),
                           ),
                         ])),
               ),
@@ -478,7 +479,13 @@ class CustomModalBottomSheet extends StatelessWidget {
                               String? token = CacheHelper.getData(key: 'Token');
 
                               if (token != null) {
-                                widget = ProposalScreen();
+                                if (service.categories == "Foundation Builder") {
+                                  widget = ProposalScreen2  (proposalService: service,);
+
+                                }  else{
+                                  widget = ProposalScreen(proposalService: service,);
+
+                                }
                               } else {
                                 widget = LoginScreen();
                               }
@@ -503,14 +510,14 @@ class CustomModalBottomSheet extends StatelessWidget {
                                       fontSize: 16,
                                       color: Colors.white),
                                 ),
-                              ],
+                              ].animate( delay:1600.ms,interval: 200.ms).fadeIn(duration: 600.ms),
                             )),
                       ),
                     ),
                   ),
                 ),
               )
-            ],
+            ].animate( interval: 100.ms).fadeIn(duration: 900.ms),
           ));
   }));
 }  }

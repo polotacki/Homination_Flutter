@@ -23,7 +23,7 @@ class CustomNavigationBar extends State<CustomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: widget.children.asMap().entries.map(
             (entry) {
           final index = entry.key;

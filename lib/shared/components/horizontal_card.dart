@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homaination_mobile/model/services_model.dart';
@@ -13,10 +14,12 @@ class HorizontalCard extends StatelessWidget {
 
   final double avarageRate;
 
-  HorizontalCard({
+  VoidCallback? favOnPressed;
+
+   HorizontalCard({
     super.key,
     context,
-    required this.service, required this.avarageRate,
+    required this.service, required this.avarageRate,required this.favOnPressed
   });
 
   @override
@@ -65,17 +68,16 @@ class HorizontalCard extends StatelessWidget {
                 ),
                 Expanded(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
+
                         Text(service.title,
                             style: TextStyle(
                                 fontFamily: 'SFPRODISPLAY',
                                 color: Colors.black,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold)),
-                      ],
-                    ),
+
                     SizedBox(
                       height: 6.w,
                     ),
@@ -107,7 +109,7 @@ class HorizontalCard extends StatelessWidget {
                                 color: secondaryColor,
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.normal))
-                      ],
+                      ].animate(delay: 300.ms, interval: 200.ms).fadeIn(duration: 900.ms),
                     ),
                   ],
                 )),
@@ -117,9 +119,12 @@ class HorizontalCard extends StatelessWidget {
                     size: 20,
                     color: Colors.red,
                   ),
-                  onPressed: () {},
-                )
-              ],
+                  onPressed: favOnPressed,
+                ).animate( ).fadeIn(
+                    duration: 300.ms),
+              ].animate(
+                   interval: 200.ms)
+                  .fadeIn(duration: 900.ms),
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(55.w, 6.h, 0, 0),
@@ -137,13 +142,15 @@ class HorizontalCard extends StatelessWidget {
                       SizedBox(
                         height: 6.h,
                       ),
-                      Text(service.categories,
-                          style: TextStyle(
-                              fontFamily: 'SFPRODISPLAY',
-                              color: secondaryColor,
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w300)),
-                    ],
+                      Container(width: 130.w,
+                        child: Text(service.categories,
+                            style: TextStyle(
+                                fontFamily: 'SFPRODISPLAY',
+                                color: secondaryColor,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w300)),
+                      ),
+                    ].animate(delay: 600.ms, interval: 200.ms).fadeIn(duration: 900.ms),
                   ),
                   RawMaterialButton(
                     fillColor: Colors.white,
@@ -188,7 +195,7 @@ class HorizontalCard extends StatelessWidget {
                       ),
                     ),
                   )
-                ],
+                ].animate(delay: 600.ms, interval: 200.ms).fadeIn(duration: 900.ms),
               ),
             ),
           ])),
@@ -198,84 +205,3 @@ class HorizontalCard extends StatelessWidget {
   }
 }
 
-/*Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          controller.animateToPage(
-                                            0,
-                                            duration:
-                                                const Duration(seconds: 1),
-                                            curve: Curves.easeInOut,
-                                          );
-                                        },
-                                        child: Container(
-                                          width: 123.w,
-                                          alignment: Alignment.center,
-                                          height: 50.h,
-                                          decoration: BoxDecoration(
-
-                                              borderRadius:
-                                                  BorderRadius.circular(12)),
-                                          child: Text("AboutUs",
-                                              style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  color: Color(0xFF6A6A6A),
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w500)),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          controller.animateToPage(
-                                            1,
-                                            duration:
-                                                const Duration(seconds: 1),
-                                            curve: Curves.easeInOut,
-                                          );
-                                        },
-                                        child: Container(
-                                          width: 123.h,
-                                          alignment: Alignment.center,
-                                          height: 50.h,
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(12)),
-                                          child: Text("Company",
-                                              style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  color:Color(0xFF6A6A6A),
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w400)),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          controller.animateToPage(
-                                            2,
-                                            duration:
-                                                const Duration(seconds: 1),
-                                            curve: Curves.easeInOut,
-                                          );
-                                        },
-                                        child: Container(
-                                          width: 104.h,
-                                          alignment: Alignment.center,
-                                          height: 50.h,
-                                          decoration: BoxDecoration(
-                                              color: ButtonColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(12)),
-                                          child: Text("Reviews",
-                                              style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  color:Colors.white,
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w500)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),*/

@@ -18,4 +18,42 @@ class ServicesSuccess extends HomeState {
 
   ServicesSuccess(this.servicesModel);
 }
+class RecommendedServicesLoading extends HomeState {}
+
+class RecommendedServicesError extends HomeState {
+  final String error;
+
+  RecommendedServicesError(this.error);
+}
+
+class RecommendedServicesSuccess extends HomeState {
+  final List<ServicesModel> servicesModel;
+
+  RecommendedServicesSuccess(this.servicesModel);
+}
+
+class ReviewsLoading extends HomeState {}
+
+class ReviewsError extends HomeState {
+  final String error;
+
+  ReviewsError(this.error);
+}
+
+class ReviewsSuccess extends HomeState {
+  final List<Review> reviewModel;
+
+  ReviewsSuccess(this.reviewModel);
+}
 class SearchQueryState extends HomeState {}
+class AddFavoriteServiceLoading extends HomeState {}
+
+class AddFavoriteServiceError extends HomeState {
+  final String error;
+
+  AddFavoriteServiceError(this.error);
+}
+
+class AddFavoriteServiceSuccess extends HomeState {
+
+}

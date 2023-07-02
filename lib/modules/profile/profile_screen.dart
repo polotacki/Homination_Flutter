@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -31,7 +32,8 @@ class ProfileScreen extends StatelessWidget {
                     color: Colors.black,
                     fontSize: 20.sp,
                     fontWeight: FontWeight.bold),
-              ),
+              ) .animate()
+                  .fadeIn(duration: 300.ms),
               centerTitle: true,
 
             ),
@@ -170,7 +172,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                     )
-                  ],
+                  ].animate( interval: 100.ms).fadeIn(duration: 900.ms),
                 ),
               ),
             ),

@@ -1,0 +1,17 @@
+{
+  "clientName": "Alice",
+  "providerName": "Bob",
+  "serviceName": "Siding",
+  "requestDesc": {
+    "propertyInMeter": "100",
+    "requestDesc": {
+      "style": "Modern",
+      "color": "Blue",
+      "materials": "Vinyl",
+      "total_Cost": 5000.0,
+      "time_Frame": "2 weeks"
+    },
+    "propertyType": "House",
+    "location": "New York"
+  }
+}

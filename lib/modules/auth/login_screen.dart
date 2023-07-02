@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:homaination_mobile/layout/home_layout.dart';
-import 'package:homaination_mobile/modules/auth/signup.dart';
+import 'package:homaination_mobile/modules/auth/register_screen.dart';
 import 'package:homaination_mobile/shared/network/local/cache_helper.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
@@ -25,15 +25,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => LoginCubit(),
-        child: Scaffold(
-            body: SingleChildScrollView(
-              child: Column(
-
-                children: [
-
-                  Container(
-                      alignment: Alignment.center,
-                      child: BlocConsumer<LoginCubit, LoginState>(
+        child:  BlocConsumer<LoginCubit, LoginState>(
                         listener: (context, state) {
                           if (state is LoginSuccess) {
                             if(state.loginModel.token !=null){
@@ -42,8 +34,9 @@ class LoginScreen extends StatelessWidget {
                               print("loggedIn Successfully");
                               CacheHelper.saveData(key: "profilePic", value: state.loginModel.profilePic);
                               CacheHelper.saveData(key: "name", value: state.loginModel.name);
+                              CacheHelper.saveData(key: "userName", value: state.loginModel.username);
                               CacheHelper.saveData(key: "email", value: state.loginModel.email);
-
+                              CacheHelper.saveData(key: "id", value: state.loginModel.sId);
                               CacheHelper.saveData(key: "Token", value: state.loginModel.token).then((value) => Navigator.pushReplacement(context, MaterialPageRoute(
                                   builder: (context) => const HomeLayout())));
                               print("sharedprefrences :${CacheHelper.getData(key: "Token")}");
@@ -67,7 +60,15 @@ class LoginScreen extends StatelessWidget {
                         ,
                         builder: (context, state) {
                           var cubit = LoginCubit.get(context);
-                          return Form(
+                          return Scaffold(
+                              body: SingleChildScrollView(
+                              child: Column(
+
+                              children: [
+
+                              Container(
+                              alignment: Alignment.center,
+                              child: Form(
                               key: _formKey,
 
                               child: Column(
@@ -125,10 +126,10 @@ class LoginScreen extends StatelessWidget {
 
                                       decoration: InputDecoration(
                                         prefixIcon: const Icon(
-                                          Iconsax.sms,
+                                          Iconsax.profile_circle,
                                           color: secondaryColor,
                                         ),
-                                        hintText: 'Email Address',
+                                        hintText: 'Username',
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(
                                                 12),
@@ -286,7 +287,7 @@ class LoginScreen extends StatelessWidget {
                                                   context,
                                                   new MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const Signup()));
+                                                           RegisterScreen()));
                                             },
                                             child: const Text(
                                               "Create Account",
@@ -300,13 +301,8 @@ class LoginScreen extends StatelessWidget {
                                       ))
                                 ],
                               )
-                          );
-                        },
-                      )
-                  )
-                ],
-              ),
-            )));
-  }
 
-}
+
+    ))])));}
+
+    ));}}
