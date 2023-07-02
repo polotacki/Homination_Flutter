@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Filter> filter = [];
     return BlocProvider(
-        create: (context) => HomeCubit()..getServicesData(),
+        create: (context) => HomeCubit()..getRecommendedServicesData()..getServicesData(),
         child: BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {},
             builder: (context, state) {
@@ -227,9 +227,9 @@ class HomeScreen extends StatelessWidget {
                               top: 20.0,
                             ),
                             child: ConditionalBuilder(
-                                condition: cubit.services.isNotEmpty,
+                                condition: cubit.recommendedServices.isNotEmpty,
                                 builder: (context) {
-                                  final services = cubit.services;
+                                  final services = cubit.recommendedServices;
                                   List<Widget> cardList =
                                       services.map((service) {
                                     return VerticalCard(
@@ -391,7 +391,8 @@ class HomeScreen extends StatelessWidget {
                                                               services[
                                                                       index]
                                                                   .reviews),
-                                                            ))));
+                                                            favOnPressed:() {cubit.addFavoriteService(serviceId: cubit.services[
+                                                            index].id);}))));
                                       },
                                     );
                                   },

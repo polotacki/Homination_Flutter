@@ -47,6 +47,8 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
     return  BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {},
             builder: (context, state) {
+              var cubit = context.read<HomeCubit>();
+
               print(widget.servicesModel);
               void _sortServices(String sortBy, bool isAscending) {
                 setState(() {
@@ -207,7 +209,7 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                               service: widget.servicesModel[index],
                               avarageRate: calculateAverageRating(
                                   widget.servicesModel[index].reviews),
-                            ))));
+                                favOnPressed:() {cubit.addFavoriteService(serviceId:  widget.servicesModel[index].id);} ))));
                           },
                         ),
                       ),

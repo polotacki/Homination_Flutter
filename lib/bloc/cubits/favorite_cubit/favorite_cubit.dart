@@ -1,83 +1,42 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:homaination_mobile/model/services_model.dart';
-import 'package:homaination_mobile/shared/network/remote/http_helper.dart';
 import 'package:meta/meta.dart';
+
 import '../../../model/review_model.dart';
-import '../../../modules/search_page/search_page.dart';
+import '../../../model/services_model.dart';
 import '../../../shared/network/end_points.dart';
 import '../../../shared/network/local/cache_helper.dart';
+import '../../../shared/network/remote/http_helper.dart';
 
-part 'home_state.dart';
+part 'favorite_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitial());
-  static HomeCubit get(context) => BlocProvider.of(context);
-  List<ServicesModel> services = [];
-  List<ServicesModel> recommendedServices = [];
+class FavoriteCubit extends Cubit<FavoriteState> {
+  FavoriteCubit() : super(FavoriteInitial());
+  static FavoriteCubit get(context) => BlocProvider.of(context);
+  List<ServicesModel> favoriteServices = [];
   List<Review> reviews=[];
-  var profilePic=CacheHelper.getData(key: "profilePic");
   var id=CacheHelper.getData(key: "id");
-  var searchCtrl = TextEditingController();
-
   void getServicesData() {
+    print(id);
 
-    emit(ServicesLoading());
+    emit(FavoriteLoading());
 
-    HttpHelper.getData(url: servicesEndPoint).then((response) {
-
-      if (response.statusCode == 200) {
-        print('API call successful, response body:');
-        print(response.body);
-        services =
-        (jsonDecode(response.body) as List)
-            .map((serviceJson) => ServicesModel.fromJson(serviceJson))
-            .toList();
-
-        print('Data processing successful, services:');
-        services.forEach((element) {print(element.location);});
-        getReviewData(services);
-
-        emit(ServicesSuccess(services));
-
-      }
-      else
-      {
-        print('API call failed, response body:');
-        print(response.body);
-
-        emit(ServicesError(response.body));
-      }
-    }
-    ).catchError((error)
-    {
-      print('API call error:');
-      print(error);
-      emit(ServicesError(error.toString()));
-    });
-  }
-
-  void getRecommendedServicesData() {
-
-    emit(RecommendedServicesLoading());
-
-    HttpHelper.getData(url: recommendedServicesEndPoint +"Desing And Planing?provider=naser&lat=90&long=90" ).then((response) {
+    HttpHelper.getData(url: servicesEndPoint+"$id/favorite").then((response) {
 
       if (response.statusCode == 200) {
         print('API call successful, response body:');
         print(response.body);
-        recommendedServices =
+        favoriteServices =
             (jsonDecode(response.body) as List)
                 .map((serviceJson) => ServicesModel.fromJson(serviceJson))
                 .toList();
 
         print('Data processing successful, services:');
-        recommendedServices.forEach((element) {print(element.location);});
-        getReviewData(recommendedServices);
+        favoriteServices.forEach((element) {print(element.location);});
+        getReviewData(favoriteServices);
 
-        emit(RecommendedServicesSuccess(recommendedServices));
+        emit(FavoriteSuccess(favoriteServices));
 
       }
       else
@@ -85,20 +44,20 @@ class HomeCubit extends Cubit<HomeState> {
         print('API call failed, response body:');
         print(response.body);
 
-        emit(RecommendedServicesError(response.body));
+        emit(FavoriteError(response.body));
       }
     }
     ).catchError((error)
     {
       print('API call error:');
       print(error);
-      emit(RecommendedServicesError(error.toString()));
+      emit(FavoriteError(error.toString()));
     });
   }
 
   void getReviewData(List<ServicesModel> services) {
 
-    emit(ReviewsLoading());
+    emit(FavoriteReviewsLoading());
     int responseCount = 0; // Counter variable to keep track of responses
 
     for (var service in services) {
@@ -120,35 +79,20 @@ class HomeCubit extends Cubit<HomeState> {
           if (responseCount == services.length) { // Check if all requests have been completed
             print('Data processing successful, services:');
             print(reviews);
-            emit(ReviewsSuccess(reviews));
+            emit(FavoriteReviewsSuccess(reviews));
           }
         } else {
           print('API call failed, response body:');
           print(response.body);
-        emit(ReviewsError(response.body));
-      }
+          emit(FavoriteReviewsError(response.body));
+        }
       }).catchError((error) {
         print('API call error:');
         print(error);
-        emit(ReviewsError(error.toString()));
+        emit(FavoriteReviewsError(error.toString()));
       });
     }
   }
-
-void search(context,service,filter){
-  searchCtrl.text;
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => SearchPage(
-        query: searchCtrl.text,service: service ,filter:filter
-      ),
-    ),
-  );
-  print(service);
-  emit(SearchQueryState());
-}
-
   void addFavoriteService({
 
     required String serviceId,

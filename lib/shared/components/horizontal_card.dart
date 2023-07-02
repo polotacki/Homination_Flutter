@@ -14,10 +14,12 @@ class HorizontalCard extends StatelessWidget {
 
   final double avarageRate;
 
-  const HorizontalCard({
+  VoidCallback? favOnPressed;
+
+   HorizontalCard({
     super.key,
     context,
-    required this.service, required this.avarageRate,
+    required this.service, required this.avarageRate,required this.favOnPressed
   });
 
   @override
@@ -117,7 +119,7 @@ class HorizontalCard extends StatelessWidget {
                     size: 20,
                     color: Colors.red,
                   ),
-                  onPressed: () {},
+                  onPressed: favOnPressed,
                 ).animate( ).fadeIn(
                     duration: 300.ms),
               ].animate(

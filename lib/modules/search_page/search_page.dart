@@ -170,7 +170,7 @@ class SearchPage extends StatelessWidget {
 
                         return HorizontalCard(
                           avarageRate: calculateAverageRating(service.reviews),
-                          service: service,
+                          service: service,favOnPressed: (){},
                         );
                       },
                     ),

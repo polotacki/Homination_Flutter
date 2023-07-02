@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
                               ),
                           backgroundColor: Theme.of(context).canvasColor,
                           screenFunction: () async {
-                            await Future.delayed(const Duration(seconds: 100));
+                            await Future.delayed(const Duration(seconds: 0));
                             return startScreen;
                           },
                           splashTransition: SplashTransition.rotationTransition,
