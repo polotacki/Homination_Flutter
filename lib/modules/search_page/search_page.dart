@@ -13,12 +13,14 @@ import '../../shared/components/filter_modal_bottom_sheet.dart';
 import '../../shared/components/horizontal_card.dart';
 
 class SearchPage extends StatelessWidget {
+
   SearchPage(
       {Key? key,
       required this.query,
       required this.service,
-      required this.filter})
+      required this.filter,required this.favs})
       : super(key: key);
+  final List<bool> favs;
 
   final String query;
 
@@ -168,7 +170,15 @@ class SearchPage extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         final service = cubit.searchResults[index];
 
-                        return HorizontalCard(
+                        return HorizontalCard(icon:favs[index]? const Icon(
+                          Iconsax.heart5,
+                          size: 20,
+                          color: Colors.red,
+                        ): const Icon(
+                          Iconsax.heart,
+                          size: 20,
+                          color: Colors.black,
+                        ),
                           avarageRate: calculateAverageRating(service.reviews),
                           service: service,favOnPressed: (){},
                         );

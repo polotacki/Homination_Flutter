@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:homaination_mobile/bloc/cubits/favorite_cubit/favorite_cubit.dart';
 import 'package:homaination_mobile/shared/components/horizontal_card.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../../model/review_model.dart';
 
@@ -27,7 +28,7 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FavoriteCubit()..getServicesData(),
+      create: (context) => FavoriteCubit()..getFavoriteServicesData(),
       child: BlocConsumer<FavoriteCubit, FavoriteState>(
           listener: (context, state) {},
           builder: (context, state) {
@@ -51,11 +52,15 @@ class FavoriteScreen extends StatelessWidget {
                           child: SlideAnimation(
                               horizontalOffset: 50.0,
                               child: FadeInAnimation(
-                                  child: HorizontalCard(
+                                  child: HorizontalCard( icon :const Icon(
+                                    Iconsax.trash,
+                                    size: 20,
+                                    color: Colors.red,
+                                  ),
                                       service: cubit.favoriteServices[index],
                                       avarageRate: calculateAverageRating(cubit.favoriteServices[
                                       index]
-                                          .reviews),favOnPressed:() {cubit.addFavoriteService(serviceId: cubit.favoriteServices[
+                                          .reviews),favOnPressed:() {cubit.deleteFavoriteService(serviceId: cubit.favoriteServices[
                                   index].id);}))));
                     },
                     separatorBuilder: (context, index) =>

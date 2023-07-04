@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../modules/chat_screen/chat_screen.dart';
+import 'package:homaination_mobile/modules/proposals_history/proposals_history_screen.dart';
 import '../../../modules/favorite_screen/favorite_screen.dart';
 import '../../../modules/home_screen/home_screen.dart';
 import '../../../modules/profile/profile_screen.dart';
@@ -13,7 +13,7 @@ class AppCubit extends Cubit<AppStates> {
 
   List<Widget> screens = [
      HomeScreen(),
-    const ChatScreen(),
+    const ProposalsHistory(),
     const FavoriteScreen(),
     const ProfileScreen(),
   ];

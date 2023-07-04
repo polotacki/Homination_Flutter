@@ -6,6 +6,8 @@ abstract class FavoriteState {}
 class FavoriteInitial extends FavoriteState {}
 class FavoriteLoading extends FavoriteState {}
 
+class favsSuccess extends FavoriteState {}
+
 class FavoriteError extends FavoriteState {
   final String error;
 
@@ -39,5 +41,5 @@ class AddFavoriteServiceError extends FavoriteState {
   AddFavoriteServiceError(this.error);
 }
 
-class AddFavoriteServiceSuccess extends FavoriteState {
+class DeleteFavoriteServiceSuccess extends FavoriteState {
 }

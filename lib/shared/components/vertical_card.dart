@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:homaination_mobile/shared/style/constants.dart';
@@ -24,12 +25,16 @@ class VerticalCard extends StatelessWidget {
 
   final service;
 
-  const VerticalCard(
+  final Icon icon;
+
+  VoidCallback? favOnPressed;
+
+   VerticalCard(
       {super.key,
       context,
       required this.cardName,
       required this.imageAsset,
-      required this.reviews, required this.category, required this.price, required this.averageReviews,required this.service});
+      required this.reviews, required this.category, required this.price, required this.averageReviews,required this.service,required this.favOnPressed, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +99,14 @@ class VerticalCard extends StatelessWidget {
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w200))),
                 IconButton(
-                  icon: const Icon(
-                    Iconsax.heart5,
-                    size: 28,
-                    color: Colors.red,
-                  ),
-                  onPressed: () {},
-                )
-              ],
+                  icon:icon,
+                  onPressed: favOnPressed,
+                ).animate( ).fadeIn(
+                    duration: 300.ms),
+              ].animate(
+                  interval: 200.ms)
+                  .fadeIn(duration: 900.ms),
+
             ),
             Row(
               children: [
@@ -131,7 +136,7 @@ class VerticalCard extends StatelessWidget {
                         color: secondaryColor,
                         fontSize: 10.sp,
                         fontWeight: FontWeight.normal))
-              ],
+              ].animate(delay: 300.ms, interval: 200.ms).fadeIn(duration: 900.ms),
             ),
             SizedBox(
               height: 18.h,

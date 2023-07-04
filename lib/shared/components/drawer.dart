@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,10 +29,10 @@ class MyDrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: CacheHelper.getData(key: "profilePic") ==
-                            null
-                        ? NetworkImage(CacheHelper.getData(key: "profilePic"))
-                        : const AssetImage('assets/images/anonymous.png')
+                    backgroundImage: cubit.base64String != null &&  cubit.base64String != ""
+                        ?       MemoryImage(base64Decode( cubit.base64String))
+
+                        : AssetImage('assets/images/anonymous.png')
                             as ImageProvider,
                     radius: 40,
                   ),
@@ -74,7 +76,7 @@ class MyDrawer extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const EditProfile()));
+                              builder: (_) =>  EditProfile()));
                     },
                   ),
                   ListTile(

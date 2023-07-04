@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -56,10 +58,7 @@ class ApplicationCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
 
                       ),
-                      child: companyImage==null?Image.network(
-                        companyImage,
-                        fit: BoxFit.fill,
-                      ):Image.asset("assets/images/anonymous.png", fit: BoxFit.fill,)),
+                      child: companyImage!=null && companyImage!=""? Image.memory(base64Decode( companyImage),fit: BoxFit.cover,):Image.asset("assets/images/anonymous.png", fit: BoxFit.fill,)),
                 ),
                 Expanded(
                   child: ListTile(

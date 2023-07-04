@@ -16,10 +16,14 @@ class HorizontalCard extends StatelessWidget {
 
   VoidCallback? favOnPressed;
 
+
+
+  final Icon icon;
+
    HorizontalCard({
     super.key,
     context,
-    required this.service, required this.avarageRate,required this.favOnPressed
+    required this.service, required this.avarageRate,required this.favOnPressed, required this.icon
   });
 
   @override
@@ -113,12 +117,8 @@ class HorizontalCard extends StatelessWidget {
                     ),
                   ],
                 )),
-                IconButton(
-                  icon: const Icon(
-                    Iconsax.heart5,
-                    size: 20,
-                    color: Colors.red,
-                  ),
+        IconButton(
+                  icon:icon,
                   onPressed: favOnPressed,
                 ).animate( ).fadeIn(
                     duration: 300.ms),

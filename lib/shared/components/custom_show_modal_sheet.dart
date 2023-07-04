@@ -479,7 +479,7 @@ class CustomModalBottomSheet extends StatelessWidget {
                               String? token = CacheHelper.getData(key: 'Token');
 
                               if (token != null) {
-                                if (service.categories == "Foundation Builder") {
+                                if (service.categories == "Design And Planing") {
                                   widget = ProposalScreen2  (proposalService: service,);
 
                                 }  else{

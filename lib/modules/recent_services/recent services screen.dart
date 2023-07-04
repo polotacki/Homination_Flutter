@@ -14,7 +14,9 @@ class RecentServicesScreen extends StatefulWidget {
   RecentServicesScreen({
     super.key,
     required this.servicesModel,
+    required this.favs
   });
+  var favs;
 
   final List<ServicesModel> servicesModel;
 
@@ -205,7 +207,15 @@ class _RecentServicesScreenState extends State<RecentServicesScreen> {
                             child: SlideAnimation(
                             horizontalOffset: 50.0,
                             child: FadeInAnimation(
-                            child: HorizontalCard(
+                            child: HorizontalCard(icon: widget.favs[index]?const Icon(
+                              Iconsax.heart5,
+                              size: 20,
+                              color: Colors.red,
+                            ): const Icon(
+                              Iconsax.heart,
+                              size: 20,
+                              color: Colors.black,
+                            ),
                               service: widget.servicesModel[index],
                               avarageRate: calculateAverageRating(
                                   widget.servicesModel[index].reviews),

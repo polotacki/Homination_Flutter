@@ -3,44 +3,30 @@ import 'dart:io';
 import 'package:editable_image/editable_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../bloc/cubits/edit_profile_cubit/edit_profile_cubit.dart';
 import '../../shared/network/local/cache_helper.dart';
 import '../../shared/style/constants.dart';
+class EditProfile extends StatelessWidget {
+   EditProfile({Key? key}) : super(key: key);
 
-class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
 
-  @override
-  State<EditProfile> createState() => _EditProfile();
-}
-
-class _EditProfile extends State<EditProfile> {
-  File? _profilePicFile;
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
-  // A simple usage of EditableImage.
-  // This method gets called when trying to change an image.
-  Future<void> _directUpdateImage(File? file) async {
-    if (file == null) return;
-
-    setState(() {
-      _profilePicFile = file;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+      create: (context) => EditProfileCubit(),
+      child: BlocConsumer<EditProfileCubit, EditProfileState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            var cubit = context.read<EditProfileCubit>();
+            return Scaffold(
       appBar: AppBar(
         title: Text(
           'Profile',
@@ -71,11 +57,11 @@ class _EditProfile extends State<EditProfile> {
               EditableImage(
                 // Define the method that will run on
                 // the change process of the image.
-                onChange: _directUpdateImage,
+                onChange: cubit.directUpdateImage,
 
                 // Define the source of the image.
-                image: _profilePicFile != null
-                    ? Image.file(_profilePicFile!, fit: BoxFit.cover)
+                image: cubit.profilePicFile != null
+                    ? Image.file(cubit.profilePicFile!, fit: BoxFit.cover)
                     : Image.asset("assets/images/anonymous.png"),
 
                 // Define the size of EditableImage.
@@ -124,111 +110,117 @@ class _EditProfile extends State<EditProfile> {
               _buildAlign("Name"),
               _buildTextField(
                   labelText: CacheHelper.getData(key: "name") ?? "",
-                  controller: _nameController),
+                  controller: cubit.nameController),
               const Spacer(),
               _buildAlign("Your Email"),
               _buildTextField(
                   labelText: CacheHelper.getData(key: "email") ?? "",
-                  controller: _emailController),
+                  controller: cubit.emailController),
               const Spacer(),
               _buildAlign("Password"),
               _buildTextField(
                   labelText: '*******',
                   obscureText: true,
-                  controller: _passwordController),
+                  controller: cubit.passwordController),
               const Spacer(flex: 2),
-              _buildTextButton(),
+              _buildTextButton(cubit,() {
+                final isValid = _formKey.currentState!.validate();
+                if (isValid) {
+                  print(cubit.nameController.text);
+                  print(cubit.passwordController.text);
+cubit.editProfile();
+                } else {
+                  print("not ok");
+                }
+              }),
             ].animate(interval: 100.ms).fadeIn(duration: 900.ms),
           ),
         ),
       ),
     );
-  }
+  }),
+  );
 
-  Align _buildAlign(String text) {
-    return Align(
-      alignment: AlignmentDirectional.centerStart,
-      child: Text(
-        text,
-        style: TextStyle(
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.normal,
-            fontSize: 16,
-            color: Color(0xFF6A6A6A)),
-      ),
-    );
-  }
 
-  Padding _buildTextField(
-      {String labelText = '', bool obscureText = false, controller}) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-        onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          hintText: labelText,
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.white)),
-          hintStyle: const TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.normal,
-              fontSize: 16,
-              color: Colors.black),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.white)),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.red)),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.red)),
-          errorStyle: const TextStyle(
-              fontFamily: "Poppins",
-              fontWeight: FontWeight.normal,
-              fontSize: 12,
-              color: Colors.red),
-        ),
-      ),
-    );
   }
+   Align _buildAlign(String text) {
+     return Align(
+       alignment: AlignmentDirectional.centerStart,
+       child: Text(
+         text,
+         style: TextStyle(
+             fontFamily: "Poppins",
+             fontWeight: FontWeight.normal,
+             fontSize: 16,
+             color: Color(0xFF6A6A6A)),
+       ),
+     );
+   }
 
-  Padding _buildTextButton() {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
-        child: SizedBox(
-          height: 54.h,
-          width: 400,
-          child: TextButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0)),
-                ),
-                backgroundColor: MaterialStateProperty.all(buttonColor)),
-            onPressed: () {
-              final isValid = _formKey.currentState!.validate();
-              if (isValid) {
-                print(_nameController.text);
-                print(_passwordController.text);
-              } else {
-                print("not ok");
-              }
-            },
-            child: const Text(
-              "Save Now",
-              style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Colors.white),
-            ),
-          ),
-        ));
-  }
+   Padding _buildTextField(
+       {String labelText = '', bool obscureText = false, controller,context}) {
+     return Padding(
+       padding: const EdgeInsets.all(16.0),
+       child: TextFormField(
+         controller: controller,
+         keyboardType: TextInputType.emailAddress,
+         textInputAction: TextInputAction.next,
+         onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+         obscureText: obscureText,
+         decoration: InputDecoration(
+           hintText: labelText,
+           enabledBorder: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(12),
+               borderSide: const BorderSide(color: Colors.white)),
+           hintStyle: const TextStyle(
+               fontFamily: "Poppins",
+               fontWeight: FontWeight.normal,
+               fontSize: 16,
+               color: Colors.black),
+           focusedBorder: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(12),
+               borderSide: const BorderSide(color: Colors.white)),
+           errorBorder: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(12),
+               borderSide: const BorderSide(color: Colors.red)),
+           focusedErrorBorder: OutlineInputBorder(
+               borderRadius: BorderRadius.circular(12),
+               borderSide: const BorderSide(color: Colors.red)),
+           errorStyle: const TextStyle(
+               fontFamily: "Poppins",
+               fontWeight: FontWeight.normal,
+               fontSize: 12,
+               color: Colors.red),
+         ),
+       ),
+     );
+   }
+
+   Padding _buildTextButton(cubit,onPressed) {
+     return Padding(
+         padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+         child: SizedBox(
+           height: 54.h,
+           width: 400,
+           child: TextButton(
+             style: ButtonStyle(
+                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                   RoundedRectangleBorder(
+                       borderRadius: BorderRadius.circular(12.0)),
+                 ),
+                 backgroundColor: MaterialStateProperty.all(buttonColor)),
+             onPressed: onPressed,
+             child: const Text(
+               "Save Now",
+               style: TextStyle(
+                   fontFamily: "Poppins",
+                   fontWeight: FontWeight.w600,
+                   fontSize: 16,
+                   color: Colors.white),
+             ),
+           ),
+         ));
+   }
+
+
 }

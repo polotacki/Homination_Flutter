@@ -6,7 +6,7 @@ abstract class HomeState {}
 class HomeInitial extends HomeState {}
 
 class ServicesLoading extends HomeState {}
-
+class favsSuccess extends HomeState {}
 class ServicesError extends HomeState {
   final String error;
 
@@ -36,24 +36,33 @@ class ReviewsLoading extends HomeState {}
 
 class ReviewsError extends HomeState {
   final String error;
-
   ReviewsError(this.error);
 }
 
 class ReviewsSuccess extends HomeState {
   final List<Review> reviewModel;
-
   ReviewsSuccess(this.reviewModel);
 }
+
 class SearchQueryState extends HomeState {}
+
 class AddFavoriteServiceLoading extends HomeState {}
 
 class AddFavoriteServiceError extends HomeState {
   final String error;
-
   AddFavoriteServiceError(this.error);
 }
 
-class AddFavoriteServiceSuccess extends HomeState {
+class AddFavoriteServiceSuccess extends HomeState {}
 
+class FavoriteLoading extends HomeState {}
+
+class FavoriteError extends HomeState {
+  final String error;
+  FavoriteError(this.error);
+}
+
+class FavoriteSuccess extends HomeState {
+  final List<ServicesModel> servicesModel;
+  FavoriteSuccess(this.servicesModel);
 }

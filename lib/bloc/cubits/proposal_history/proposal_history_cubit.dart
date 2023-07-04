@@ -13,7 +13,7 @@ part 'proposal_history_state.dart';
 
 class ProposalHistoryCubit extends Cubit<ProposalHistoryState> {
   ProposalHistoryCubit() : super(ProposalHistoryInitial());
-
+  var base64String = CacheHelper.getData(key: "profilePic");
   List<ProposalHistory> proposalHistory=[];
   void getProposalHistoryData() {
     emit(ProposalHistoryLoading());

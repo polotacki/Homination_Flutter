@@ -17,7 +17,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   List<ServicesModel> favoriteServices = [];
   List<Review> reviews=[];
   var id=CacheHelper.getData(key: "id");
-  void getServicesData() {
+  void getFavoriteServicesData() {
     print(id);
 
     emit(FavoriteLoading());
@@ -93,7 +93,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       });
     }
   }
-  void addFavoriteService({
+
+  void deleteFavoriteService({
 
     required String serviceId,
 
@@ -101,8 +102,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
     emit(AddFavoriteServiceLoading());
 
-    HttpHelper.postData(
-        url: addFavoriteServiceEndPoint,
+    HttpHelper.deleteData(
+        url: deleteFavoriteServiceEndPoint,
         data: {
           'userId': id,
           'serviceId': serviceId,
@@ -113,7 +114,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         print(response.body);
 
 
-        emit(AddFavoriteServiceSuccess());
+        emit(DeleteFavoriteServiceSuccess());
+        getFavoriteServicesData();
       } else {
         print(response.body);
         emit(AddFavoriteServiceError(response.body));

@@ -10,7 +10,7 @@ part 'drawer_state.dart';
 
 class DrawerCubit extends Cubit<DrawerState> {
   DrawerCubit() : super(DrawerInitial());
-
+  var base64String = CacheHelper.getData(key: "profilePic");
   void selectProfile() => emit(SelectProfileState());
 
   void selectApplications() => emit(SelectApplicationsState());
@@ -24,6 +24,7 @@ class DrawerCubit extends Cubit<DrawerState> {
     CacheHelper.removeData(key: "profilePic");
     CacheHelper.removeData(key: "name");
     CacheHelper.removeData(key: "email");
+    CacheHelper.removeData(key: "id");
     print(CacheHelper.getData(key: "Token"));
     emit(SelectLogoutState());
     Navigator.pop(context); // Pop the drawer

@@ -72,7 +72,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                         child: const Icon(Iconsax.message),
                       ),
                       icon: const Icon(Iconsax.message),
-                      label: 'Messenger'),
+                      label: 'Contracts'),
                   BottomNavigationBarItem(
                       activeIcon: ShaderMask(
                         shaderCallback: (Rect bounds) {

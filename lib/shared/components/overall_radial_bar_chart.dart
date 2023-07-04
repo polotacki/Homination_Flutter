@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -63,8 +65,7 @@ class OverallRadialBarChart extends StatelessWidget {
           ],annotations:  <CircularChartAnnotation>[
           CircularChartAnnotation(
             widget: CircleAvatar(
-              backgroundImage:profilePic==null?NetworkImage(
-                profilePic
+              backgroundImage:profilePic!=null && profilePic != ""?MemoryImage(base64Decode( profilePic)
               )as ImageProvider:AssetImage("assets/images/anonymous.png")
             ),height: "100",width: "100"
           ),

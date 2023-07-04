@@ -72,7 +72,7 @@ class ProposalsHistory extends StatelessWidget {
                                                           .requestDescription)));
                                 },
                                 child: ApplicationCard(
-                                  companyImage: "",
+                                  companyImage: cubit.base64String,
                                   providerName: proposalHistory.providerName,
                                   serviceTitle: proposalHistory.serviceName,
                                   createdAt: proposalHistory.createdAt,

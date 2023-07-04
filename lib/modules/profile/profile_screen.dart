@@ -143,10 +143,11 @@ class ProfileScreen extends StatelessWidget {
                         backgroundColor: Colors.white,
                       ),
                       onPressed: () {    CacheHelper.removeData(key: "Token");
+                      CacheHelper.removeData(key: "Token");
                       CacheHelper.removeData(key: "profilePic");
                       CacheHelper.removeData(key: "name");
                       CacheHelper.removeData(key: "email");
-                      print(CacheHelper.getData(key: "Token"));
+                      CacheHelper.removeData(key: "id");
 
                       Navigator.pushReplacement(context,   MaterialPageRoute(builder: (context) => const HomeLayout()));
                       },

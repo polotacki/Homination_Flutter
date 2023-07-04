@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -44,12 +46,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Filter> filter = [];
     return BlocProvider(
-        create: (context) => HomeCubit()..getRecommendedServicesData()..getServicesData(),
-        child: BlocConsumer<HomeCubit, HomeState>(
+        create: (context) => HomeCubit()..getRecommendedServicesData()..getFavoriteServicesData()..getServicesData()
+,        child: BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {},
             builder: (context, state) {
               var cubit = context.read<HomeCubit>();
-              print(cubit.profilePic);
 
               return Scaffold(
                 appBar: AppBar(
@@ -79,17 +80,15 @@ class HomeScreen extends StatelessWidget {
                   ).animate().fadeIn(duration: 300.ms, delay: 300.ms),
                   actions: [
                     CacheHelper.getData(key: "Token") != null &&
-                            cubit.profilePic != null
+                            cubit.base64String != null &&  cubit.base64String != ""
                         ? Padding(
                             padding: const EdgeInsets.only(
                               right: 20.0,
                             ),
                             child: CircleAvatar(
-                              backgroundImage: cubit.profilePic == null
-                                  ? NetworkImage(cubit.profilePic)
-                                  : const AssetImage(
-                                          'assets/images/anonymous.png')
-                                      as ImageProvider,
+                              backgroundImage:
+                                   MemoryImage(base64Decode( cubit.base64String))
+
                             ),
                           ).animate().fadeIn(duration: 300.ms, delay: 300.ms)
                         : Padding(
@@ -203,7 +202,7 @@ class HomeScreen extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (_) => RecentServicesScreen(
+                                      builder: (_) => RecentServicesScreen(favs: cubit.favs,
                                           servicesModel: cubit.services),
                                     ),
                                   );
@@ -230,9 +229,25 @@ class HomeScreen extends StatelessWidget {
                                 condition: cubit.recommendedServices.isNotEmpty,
                                 builder: (context) {
                                   final services = cubit.recommendedServices;
-                                  List<Widget> cardList =
-                                      services.map((service) {
+                                  List<Widget> cardList = services.asMap().entries.map((entry) {
+                                    final int index = entry.key;
+                                    final  service = entry.value;
+
                                     return VerticalCard(
+                                      icon: cubit.favs[index]
+                                          ? const Icon(
+                                        Iconsax.heart5,
+                                        size: 28,
+                                        color: Colors.red,
+                                      )
+                                          : const Icon(
+                                        Iconsax.heart,
+                                        size: 28,
+                                        color: Colors.black,
+                                      ),
+                                      favOnPressed: () {
+                                        cubit.addFavoriteService(serviceId: cubit.services[index].id);
+                                      },
                                       cardName: service.title,
                                       reviews: service.reviews.length,
                                       price: (service.price),
@@ -330,7 +345,7 @@ class HomeScreen extends StatelessWidget {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (_) => RecentServicesScreen(
+                                          builder: (_) => RecentServicesScreen(favs:cubit.favs ,
                                               servicesModel: cubit.services),
                                         ));
                                   },
@@ -340,7 +355,7 @@ class HomeScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) =>
-                                                RecentServicesScreen(
+                                                RecentServicesScreen(favs: cubit.favs,
                                                     servicesModel:
                                                         cubit.services)),
                                       );
@@ -365,7 +380,7 @@ class HomeScreen extends StatelessWidget {
                               child: Scrollbar(
                                 radius: const Radius.circular(10),
                                 child: ConditionalBuilder(
-                                  condition: cubit.services.isNotEmpty,
+                                  condition: cubit.favs.isNotEmpty,
                                   builder: (context) {
                                     final services = cubit.services;
                                     return ListView.separated(
@@ -385,7 +400,15 @@ class HomeScreen extends StatelessWidget {
                                                     child: FadeInAnimation(
                                                         child: HorizontalCard(
                                                               service: services[
-                                                          index],
+                                                          index], icon:cubit.favs[index]? const Icon(
+                                                          Iconsax.heart5,
+                                                          size: 20,
+                                                          color: Colors.red,
+                                                        ): const Icon(
+                                                          Iconsax.heart,
+                                                          size: 20,
+                                                          color: Colors.black,
+                                                        ),
                                                               avarageRate:
                                                           calculateAverageRating(
                                                               services[
